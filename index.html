@@ -1,80 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vishal Consulting</title>
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-margin:0;
-font-family:Arial,sans-serif;
 background:#0f172a;
-color:#fff;
+font-family:Arial;
+color:white;
 }
 header{
-background:#111827;
 padding:20px;
 text-align:center;
+background:#111827;
 font-size:28px;
 font-weight:bold;
 }
-.container{
-padding:20px;
+.search{
+padding:15px;
+}
+.search input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:16px;
 }
 .card{
 background:#1e293b;
+margin:15px;
 padding:20px;
 border-radius:15px;
-margin-bottom:20px;
+}
+.card h2{
+margin-bottom:10px;
 }
 button{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 font-size:16px;
 cursor:pointer;
 }
 .copy{
-background:#22c55e;
+background:#16a34a;
 color:white;
 }
 .open{
 background:#2563eb;
 color:white;
 }
+footer{
+text-align:center;
+padding:20px;
+color:#bbb;
+}
 </style>
+
 </head>
 
 <body>
 
-<header>Vishal Consulting</header>
+<header>
+Vishal Consulting
+</header>
 
-<div class="container">
+<div class="search">
+<input type="text" placeholder="Search Demat App...">
+</div>
 
 <div class="card">
 <h2>Angel One</h2>
-<p>Open your FREE Demat Account</p>
-<button class="copy" onclick="copyLink('https://YOUR-LINK')">Copy Referral Link</button>
-<button class="open" onclick="window.open('https://YOUR-LINK')">Open Account</button>
+<p>Open Free Demat Account</p>
+<button class="copy">Copy Referral Link</button>
+<button class="open">Open Account</button>
 </div>
 
 <div class="card">
 <h2>Groww</h2>
-<p>Invest in Stocks & Mutual Funds</p>
-<button class="copy" onclick="copyLink('https://YOUR-LINK')">Copy Referral Link</button>
-<button class="open" onclick="window.open('https://YOUR-LINK')">Open Account</button>
+<p>Stocks, Mutual Funds & SIP</p>
+<button class="copy">Copy Referral Link</button>
+<button class="open">Open Account</button>
 </div>
 
+<div class="card">
+<h2>Upstox</h2>
+<p>Trade Stocks & F&O</p>
+<button class="copy">Copy Referral Link</button>
+<button class="open">Open Account</button>
 </div>
 
-<script>
-function copyLink(link){
-navigator.clipboard.writeText(link);
-alert("Referral Link Copied Successfully ✅");
-}
-</script>
+<div class="card">
+<h2>Dhan</h2>
+<p>Fast Trading Platform</p>
+<button class="copy">Copy Referral Link</button>
+<button class="open">Open Account</button>
+</div>
+
+<div class="card">
+<h2>Zerodha</h2>
+<p>India's Largest Broker</p>
+<button class="copy">Copy Referral Link</button>
+<button class="open">Open Account</button>
+</div>
+
+<footer>
+© 2026 Vishal Consulting
+</footer>
 
 </body>
 </html>
