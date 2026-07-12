@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal Consulting</title>
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:#fff;
+}
+header{
+background:#111827;
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+.container{
+padding:20px;
+}
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+.copy{
+background:#22c55e;
+color:white;
+}
+.open{
+background:#2563eb;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>Vishal Consulting</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Angel One</h2>
+<p>Open your FREE Demat Account</p>
+<button class="copy" onclick="copyLink('https://YOUR-LINK')">Copy Referral Link</button>
+<button class="open" onclick="window.open('https://YOUR-LINK')">Open Account</button>
+</div>
+
+<div class="card">
+<h2>Groww</h2>
+<p>Invest in Stocks & Mutual Funds</p>
+<button class="copy" onclick="copyLink('https://YOUR-LINK')">Copy Referral Link</button>
+<button class="open" onclick="window.open('https://YOUR-LINK')">Open Account</button>
+</div>
+
+</div>
+
+<script>
+function copyLink(link){
+navigator.clipboard.writeText(link);
+alert("Referral Link Copied Successfully ✅");
+}
+</script>
+
+</body>
+</html>
