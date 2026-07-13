@@ -1,223 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vishal Consulting</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vishal Consulting</title>
 
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
+<header class="header">
+  <div class="logo">💹 Vishal Consulting</div>
 
-<div class="logo">
-💹 Vishal Consulting
-</div>
-
-<nav>
-
-<a href="#">Home</a>
-
-<a href="#apps">Apps</a>
-
-<a href="#about">About</a>
-
-<a href="#contact">Contact</a>
-
-</nav>
-
+  <nav>
+    <a href="#">Home</a>
+    <a href="#apps">Apps</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
 <section class="hero">
+  <h1>India's Best Demat Account Platform</h1>
 
-<h1>India's Best Demat Account Offers</h1>
+  <p>
+    Compare India's Top Brokers & Open Your FREE Demat Account.
+  </p>
 
-<p>
-Open FREE Demat Account with India's Trusted Stock Brokers
-</p>
-
-<div class="hero-btn">
-
-<a href="#apps">
-<button class="green">
-Explore Apps
-</button>
-</a>
-
-<a href="https://wa.me/91XXXXXXXXXX">
-
-<button class="dark">
-
-WhatsApp
-
-</button>
-
-</a>
-
-</div>
-
+  <div class="hero-buttons">
+    <button class="green">Explore Apps</button>
+    <button class="dark">WhatsApp</button>
+  </div>
 </section>
 
 <section class="search-box">
-
-<input
-id="search"
-type="text"
-placeholder="Search Demat Apps...">
-
+  <input id="search" type="text" placeholder="Search Demat Apps...">
 </section>
 
 <section id="apps" class="container">
 
-<div class="card">
+  <div class="card">
+    <h2>🏦 Angel One</h2>
+    <p>⭐ 4.8 Rating</p>
+    <p>Free Demat Account</p>
 
-<h2>Angel One</h2>
+    <button class="copy">Copy Link</button>
+    <button class="open">Open Account</button>
+  </div>
 
-<p>Free Demat Account</p>
+  <div class="card">
+    <h2>📈 Groww</h2>
+    <p>⭐ 4.7 Rating</p>
+    <p>Stocks & Mutual Funds</p>
 
-<button class="copy"
-onclick="copyLink('YOUR_ANGEL_LINK')">
+    <button class="copy">Copy Link</button>
+    <button class="open">Open Account</button>
+  </div>
 
-Copy Link
+  <div class="card">
+    <h2>🚀 Upstox</h2>
+    <p>⭐ 4.7 Rating</p>
+    <p>Fast Trading Platform</p>
 
-</button>
-
-<button class="open"
-onclick="window.open('YOUR_ANGEL_LINK')">
-
-Open Account
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Groww</h2>
-
-<p>Stocks & Mutual Funds</p>
-
-<button class="copy"
-onclick="copyLink('YOUR_GROWW_LINK')">
-
-Copy Link
-
-</button>
-
-<button class="open"
-onclick="window.open('YOUR_GROWW_LINK')">
-
-Open Account
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Upstox</h2>
-
-<p>Fast Trading Platform</p>
-
-<button class="copy"
-onclick="copyLink('YOUR_UPSTOX_LINK')">
-
-Copy Link
-
-</button>
-
-<button class="open"
-onclick="window.open('YOUR_UPSTOX_LINK')">
-
-Open Account
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Dhan</h2>
-
-<p>Modern Trading Experience</p>
-
-<button class="copy"
-onclick="copyLink('YOUR_DHAN_LINK')">
-
-Copy Link
-
-</button>
-
-<button class="open"
-onclick="window.open('YOUR_DHAN_LINK')">
-
-Open Account
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Zerodha</h2>
-
-<p>India's Largest Broker</p>
-
-<button class="copy"
-onclick="copyLink('YOUR_ZERODHA_LINK')">
-
-Copy Link
-
-</button>
-
-<button class="open"
-onclick="window.open('YOUR_ZERODHA_LINK')">
-
-Open Account
-
-</button>
-
-</div>
+    <button class="copy">Copy Link</button>
+    <button class="open">Open Account</button>
+  </div>
 
 </section>
 
 <section id="about">
+  <h2>About Vishal Consulting</h2>
 
-<h2>About Vishal Consulting</h2>
-
-<p>
-
-We help users compare India's top Demat accounts and choose the best broker.
-
-</p>
-
+  <p>
+    We help users compare India's best Demat Accounts and choose the right broker.
+  </p>
 </section>
 
 <section id="contact">
+  <h2>Contact Us</h2>
 
-<h2>Contact</h2>
-
-<p>
-
-Email:
-contact@vishalconsulting.in
-
-</p>
-
+  <p>Email: contact@vishalconsulting.in</p>
 </section>
 
 <footer>
-
-© 2026 Vishal Consulting
-
+  © 2026 Vishal Consulting. All Rights Reserved.
 </footer>
-
-<script src="script.js"></script>
 
 </body>
 </html>
