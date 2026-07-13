@@ -1,7 +1,6 @@
 function copyLink(link) {
-  navigator.clipboard.writeText(link).then(() => {
-    alert("✅ Referral Link Copied!");
-  });
+  navigator.clipboard.writeText(link);
+  alert("✅ Referral Link Copied!");
 }
 
 const search = document.getElementById("search");
@@ -11,10 +10,10 @@ if (search) {
     const value = this.value.toLowerCase();
     const cards = document.querySelectorAll(".card");
 
-    cards.forEach((card) => {
-      const title = card.querySelector("h2").innerText.toLowerCase();
+    cards.forEach(function(card) {
+      const text = card.innerText.toLowerCase();
 
-      if (title.includes(value)) {
+      if (text.includes(value)) {
         card.style.display = "block";
       } else {
         card.style.display = "none";
@@ -22,3 +21,11 @@ if (search) {
     });
   });
 }
+
+const openButtons = document.querySelectorAll(".open");
+
+openButtons.forEach(function(button){
+  button.addEventListener("click", function(){
+    alert("🔗 Affiliate Link will be added after Partner Approval.");
+  });
+});
