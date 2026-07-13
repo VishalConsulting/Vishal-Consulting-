@@ -395,3 +395,23 @@ font-weight:bold;
 border-radius:10px;
 text-decoration:none;
 }
+.light-mode{
+background:#f5f5f5;
+color:#111;
+}
+
+.light-mode .card,
+.light-mode .feature,
+.light-mode .stat-box{
+background:#fff;
+color:#111;
+}
+
+#themeToggle{
+background:#22c55e;
+color:#fff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
