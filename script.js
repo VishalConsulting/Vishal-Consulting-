@@ -1,18 +1,24 @@
 function copyLink(link) {
-  navigator.clipboard.writeText(link);
-  alert("Referral Link Copied Successfully ✅");
+  navigator.clipboard.writeText(link).then(() => {
+    alert("✅ Referral Link Copied!");
+  });
 }
 
-const search = document.querySelector("input");
+const search = document.getElementById("search");
 
 if (search) {
   search.addEventListener("keyup", function () {
     const value = this.value.toLowerCase();
     const cards = document.querySelectorAll(".card");
 
-    cards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(value) ? "block" : "none";
+    cards.forEach((card) => {
+      const title = card.querySelector("h2").innerText.toLowerCase();
+
+      if (title.includes(value)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
     });
   });
 }
