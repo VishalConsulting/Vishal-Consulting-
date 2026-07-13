@@ -65,3 +65,35 @@ text-align:center;
 padding:20px;
 color:#888;
 }
+.hero{
+  text-align:center;
+  padding:60px 20px;
+  background:linear-gradient(135deg,#0f172a,#111827);
+}
+
+.hero h1{
+  color:#22c55e;
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#d1d5db;
+  font-size:18px;
+  margin-bottom:25px;
+}
+
+.hero button{
+  background:#22c55e;
+  color:white;
+  border:none;
+  padding:15px 30px;
+  border-radius:10px;
+  font-size:17px;
+  cursor:pointer;
+}
+
+.hero button:hover{
+  transform:scale(1.05);
+  transition:.3s;
+}
