@@ -1,125 +1,223 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vishal Consulting</title>
+
 <link rel="stylesheet" href="style.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-background:#0f172a;
-font-family:Arial;
-color:white;
-}
-header{
-padding:20px;
-text-align:center;
-background:#111827;
-font-size:28px;
-font-weight:bold;
-}
-.search{
-padding:15px;
-}
-.search input{
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-font-size:16px;
-}
-.card{
-background:#1e293b;
-margin:15px;
-padding:20px;
-border-radius:15px;
-}
-.card h2{
-margin-bottom:10px;
-}
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-}
-.copy{
-background:#16a34a;
-color:white;
-}
-.open{
-background:#2563eb;
-color:white;
-}
-footer{
-text-align:center;
-padding:20px;
-color:#bbb;
-}
-</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
 <header>
-Vishal Consulting
+
+<div class="logo">
+💹 Vishal Consulting
+</div>
+
+<nav>
+
+<a href="#">Home</a>
+
+<a href="#apps">Apps</a>
+
+<a href="#about">About</a>
+
+<a href="#contact">Contact</a>
+
+</nav>
+
 </header>
+
 <section class="hero">
+
 <h1>India's Best Demat Account Offers</h1>
-<p>Compare Top Brokers • Open Free Demat Account • Earn Rewards</p>
+
+<p>
+Open FREE Demat Account with India's Trusted Stock Brokers
+</p>
+
+<div class="hero-btn">
 
 <a href="#apps">
-<button class="copy">Explore Apps</button>
+<button class="green">
+Explore Apps
+</button>
 </a>
 
+<a href="https://wa.me/91XXXXXXXXXX">
+
+<button class="dark">
+
+WhatsApp
+
+</button>
+
+</a>
+
+</div>
+
 </section>
-<div class="search">
-<input type="text" placeholder="Search Demat App...">
-</div>
+
+<section class="search-box">
+
+<input
+id="search"
+type="text"
+placeholder="Search Demat Apps...">
+
+</section>
+
+<section id="apps" class="container">
 
 <div class="card">
+
 <h2>Angel One</h2>
-<p>Open Free Demat Account</p>
-<button class="copy">Copy Referral Link</button>
-<button class="open">Open Account</button>
+
+<p>Free Demat Account</p>
+
+<button class="copy"
+onclick="copyLink('YOUR_ANGEL_LINK')">
+
+Copy Link
+
+</button>
+
+<button class="open"
+onclick="window.open('YOUR_ANGEL_LINK')">
+
+Open Account
+
+</button>
+
 </div>
 
 <div class="card">
+
 <h2>Groww</h2>
-<p>Stocks, Mutual Funds & SIP</p>
-<button class="copy">Copy Referral Link</button>
-<button class="open">Open Account</button>
+
+<p>Stocks & Mutual Funds</p>
+
+<button class="copy"
+onclick="copyLink('YOUR_GROWW_LINK')">
+
+Copy Link
+
+</button>
+
+<button class="open"
+onclick="window.open('YOUR_GROWW_LINK')">
+
+Open Account
+
+</button>
+
 </div>
 
 <div class="card">
+
 <h2>Upstox</h2>
-<p>Trade Stocks & F&O</p>
-<button class="copy">Copy Referral Link</button>
-<button class="open">Open Account</button>
-</div>
 
-<div class="card">
-<h2>Dhan</h2>
 <p>Fast Trading Platform</p>
-<button class="copy">Copy Referral Link</button>
-<button class="open">Open Account</button>
+
+<button class="copy"
+onclick="copyLink('YOUR_UPSTOX_LINK')">
+
+Copy Link
+
+</button>
+
+<button class="open"
+onclick="window.open('YOUR_UPSTOX_LINK')">
+
+Open Account
+
+</button>
+
 </div>
 
 <div class="card">
-<h2>Zerodha</h2>
-<p>India's Largest Broker</p>
-<button class="copy">Copy Referral Link</button>
-<button class="open">Open Account</button>
+
+<h2>Dhan</h2>
+
+<p>Modern Trading Experience</p>
+
+<button class="copy"
+onclick="copyLink('YOUR_DHAN_LINK')">
+
+Copy Link
+
+</button>
+
+<button class="open"
+onclick="window.open('YOUR_DHAN_LINK')">
+
+Open Account
+
+</button>
+
 </div>
+
+<div class="card">
+
+<h2>Zerodha</h2>
+
+<p>India's Largest Broker</p>
+
+<button class="copy"
+onclick="copyLink('YOUR_ZERODHA_LINK')">
+
+Copy Link
+
+</button>
+
+<button class="open"
+onclick="window.open('YOUR_ZERODHA_LINK')">
+
+Open Account
+
+</button>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h2>About Vishal Consulting</h2>
+
+<p>
+
+We help users compare India's top Demat accounts and choose the best broker.
+
+</p>
+
+</section>
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<p>
+
+Email:
+contact@vishalconsulting.in
+
+</p>
+
+</section>
 
 <footer>
+
 © 2026 Vishal Consulting
+
 </footer>
+
 <script src="script.js"></script>
+
 </body>
 </html>
