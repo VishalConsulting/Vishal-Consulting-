@@ -1,31 +1,13 @@
-function copyLink(link) {
-  navigator.clipboard.writeText(link);
-  alert("✅ Referral Link Copied!");
-}
+const searchInput = document.getElementById("searchInput");
 
-const search = document.getElementById("search");
-
-if (search) {
-  search.addEventListener("keyup", function () {
+if (searchInput) {
+  searchInput.addEventListener("keyup", function () {
     const value = this.value.toLowerCase();
     const cards = document.querySelectorAll(".card");
 
-    cards.forEach(function(card) {
+    cards.forEach(card => {
       const text = card.innerText.toLowerCase();
-
-      if (text.includes(value)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+      card.style.display = text.includes(value) ? "block" : "none";
     });
   });
 }
-
-const openButtons = document.querySelectorAll(".open");
-
-openButtons.forEach(function(button){
-  button.addEventListener("click", function(){
-    alert("🔗 Affiliate Link will be added after Partner Approval.");
-  });
-});
