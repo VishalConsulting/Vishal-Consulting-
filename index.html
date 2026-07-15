@@ -114,7 +114,18 @@ Compare the top Demat Accounts in India and choose the right broker for your inv
 
 
    
-    <a href="https://angel-one.onelink.me/Wjgr/0r049v0s" class="btn">Open Account</a>
+    <button class="copy-btn" onclick="copyReferralLink()">
+📋 Copy Link
+</button>
+
+<script>
+function copyReferralLink() {
+  const link = "https://angel-one.onelink.me/Wjgr/0r049v0s";
+  navigator.clipboard.writeText(link).then(function() {
+    alert("✅ Angel One Referral Link Copied!");
+  });
+}
+</script>
     <a href="https://angel-one.onelink.me/Wjgr/0r049v0s" class="btn">Open Account</a>
 <a href="YOUR_VIDEO_LINK" class="video-btn" target="_blank">
 🎥 Copy Trade Video
