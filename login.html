@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | Vishal Consulting</title>
 <link rel="stylesheet" href="style.css">
-
 <style>
 .login-container{
 max-width:400px;
@@ -17,12 +16,10 @@ border-radius:20px;
 text-align:center;
 box-shadow:0 0 25px rgba(34,197,94,.25);
 }
-
 .login-container h1{
 color:#22c55e;
 margin-bottom:20px;
 }
-
 .login-container input{
 width:100%;
 padding:14px;
@@ -31,7 +28,6 @@ border:none;
 border-radius:10px;
 font-size:16px;
 }
-
 .login-btn{
 width:100%;
 padding:14px;
@@ -42,41 +38,65 @@ border-radius:10px;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
-transition:.3s;
-}
-
-.login-btn:hover{
-background:#16a34a;
-color:#fff;
-}
-
-.login-container p{
-margin-top:15px;
-color:#ccc;
+margin-top:10px;
 }
 </style>
 </head>
-
 <body>
 
 <div class="login-container">
-<h1>🔐 Login</h1>
+<h1>🔐 Login / Signup</h1>
 
-<form onsubmit="login(event)">
-<input type="email" placeholder="Enter Email" required>
-<input type="password" placeholder="Enter Password" required>
+<input type="email" id="email" placeholder="Enter Email">
+<input type="password" id="password" placeholder="Enter Password">
 
-<button type="submit" class="login-btn">Login</button>
-</form>
+<button class="login-btn" onclick="signup()">Sign Up</button>
+<button class="login-btn" onclick="login()">Login</button>
 
-<p>Welcome to Vishal Consulting</p>
+<p id="message"></p>
 </div>
 
-<script>
-function login(event){
-event.preventDefault();
-alert("Login Successful!");
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAursy21eAc9ZqqKWpY0wLHjH70g1c1Kfs",
+authDomain: "vishal-consulting.firebaseapp.com",
+projectId: "vishal-consulting",
+storageBucket: "vishal-consulting.firebasestorage.app",
+messagingSenderId: "535856943592",
+appId: "1:535856943592:web:619f9a732210ba9863945d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signup = function(){
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth, email, password)
+.then(() => {
+document.getElementById("message").innerText = "Signup Successful!";
+})
+.catch((error) => {
+document.getElementById("message").innerText = error.message;
+});
+}
+
+window.login = function(){
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth, email, password)
+.then(() => {
+document.getElementById("message").innerText = "Login Successful!";
 window.location.href = "index.html";
+})
+.catch((error) => {
+document.getElementById("message").innerText = error.message;
+});
 }
 </script>
 
