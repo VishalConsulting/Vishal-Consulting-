@@ -3,101 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login | Vishal Consulting</title>
-<link rel="stylesheet" href="style.css">
+<title>Login - Vishal Consulting</title>
 <style>
-.login-container{
-max-width:400px;
-margin:80px auto;
-padding:30px;
-background:#111827;
-border:2px solid #22c55e;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 25px rgba(34,197,94,.25);
-}
-.login-container h1{
-color:#22c55e;
-margin-bottom:20px;
-}
-.login-container input{
-width:100%;
-padding:14px;
-margin:10px 0;
-border:none;
-border-radius:10px;
-font-size:16px;
-}
-.login-btn{
-width:100%;
-padding:14px;
-background:#22c55e;
-color:#000;
-border:none;
-border-radius:10px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .card h2 {
+    text-align: center;
+    margin-bottom: 6px;
+    color: #16213e;
+  }
+  .card p.sub {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 6px;
+    margin-top: 14px;
+  }
+  input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+  }
+  input:focus { border-color: #1a1a2e; }
+  button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { background: #0f0f1e; }
+  .switch {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #555;
+  }
+  .switch a {
+    color: #1a1a2e;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  #message {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 14px;
+    min-height: 18px;
+  }
+  .error { color: #d32f2f; }
+  .success { color: #2e7d32; }
+  .hidden { display: none; }
+  #userBox {
+    text-align: center;
+  }
+  #userBox button.logout {
+    background: #d32f2f;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
 
-<div class="login-container">
-<h1>🔐 Login / Signup</h1>
+<div class="card">
 
-<input type="email" id="email" placeholder="Enter Email">
-<input type="password" id="password" placeholder="Enter Password">
+  <div id="authBox">
+    <h2 id="formTitle">Welcome Back</h2>
+    <p class="sub" id="formSub">Login to your Vishal Consulting account</p>
 
-<button class="login-btn" onclick="signup()">Sign Up</button>
-<button class="login-btn" onclick="login()">Login</button>
+    <form id="authForm">
+      <label>Email</label>
+      <input type="email" id="email" required placeholder="you@example.com">
 
-<p id="message"></p>
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="••••••••" minlength="6">
+
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+
+    <div class="switch">
+      <span id="switchText">Don't have an account?</span>
+      <a id="switchLink">Sign up</a>
+    </div>
+
+    <div id="message"></div>
+  </div>
+
+  <div id="userBox" class="hidden">
+    <h2>You're logged in!</h2>
+    <p class="sub" id="userEmail"></p>
+    <button class="logout" id="logoutBtn">Logout</button>
+  </div>
+
 </div>
 
+<!-- Firebase SDK -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-apiKey: "AIzaSyAursy21eAc9ZqqKWpY0wLHjH70g1c1Kfs",
-authDomain: "vishal-consulting.firebaseapp.com",
-projectId: "vishal-consulting",
-storageBucket: "vishal-consulting.firebasestorage.app",
-messagingSenderId: "535856943592",
-appId: "1:535856943592:web:619f9a732210ba9863945d"
-};
+  // ---- Your Firebase config ----
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRg2zITuNzvxRA7dhJN_R2MUrP0ZTyazU",
+    authDomain: "vishal-consulting-12354.firebaseapp.com",
+    projectId: "vishal-consulting-12354",
+    storageBucket: "vishal-consulting-12354.firebasestorage.app",
+    messagingSenderId: "765790395085",
+    appId: "1:765790395085:web:5b1447e43fc5706e3be784",
+    measurementId: "G-PBQKBQSFNF"
+  };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-window.signup = function(){
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+  let isLoginMode = true;
 
-createUserWithEmailAndPassword(auth, email, password)
-.then(() => {
-document.getElementById("message").innerText = "Signup Successful!";
-})
-.catch((error) => {
-document.getElementById("message").innerText = error.message;
-});
-}
+  const authForm = document.getElementById('authForm');
+  const formTitle = document.getElementById('formTitle');
+  const formSub = document.getElementById('formSub');
+  const submitBtn = document.getElementById('submitBtn');
+  const switchText = document.getElementById('switchText');
+  const switchLink = document.getElementById('switchLink');
+  const messageBox = document.getElementById('message');
+  const authBox = document.getElementById('authBox');
+  const userBox = document.getElementById('userBox');
+  const userEmail = document.getElementById('userEmail');
+  const logoutBtn = document.getElementById('logoutBtn');
 
-window.login = function(){
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+  switchLink.addEventListener('click', () => {
+    isLoginMode = !isLoginMode;
+    if (isLoginMode) {
+      formTitle.textContent = "Welcome Back";
+      formSub.textContent = "Login to your Vishal Consulting account";
+      submitBtn.textContent = "Login";
+      switchText.textContent = "Don't have an account?";
+      switchLink.textContent = "Sign up";
+    } else {
+      formTitle.textContent = "Create Account";
+      formSub.textContent = "Sign up for Vishal Consulting";
+      submitBtn.textContent = "Sign Up";
+      switchText.textContent = "Already have an account?";
+      switchLink.textContent = "Login";
+    }
+    messageBox.textContent = "";
+  });
 
-signInWithEmailAndPassword(auth, email, password)
-.then(() => {
-document.getElementById("message").innerText = "Login Successful!";
-window.location.href = "index.html";
-})
-.catch((error) => {
-document.getElementById("message").innerText = error.message;
-});
-}
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    messageBox.textContent = "";
+    messageBox.className = "";
+
+    try {
+      if (isLoginMode) {
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password);
+      }
+    } catch (err) {
+      messageBox.textContent = friendlyError(err.code);
+      messageBox.className = "error";
+    }
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth);
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authBox.classList.add('hidden');
+      userBox.classList.remove('hidden');
+      userEmail.textContent = user.email;
+    } else {
+      authBox.classList.remove('hidden');
+      userBox.classList.add('hidden');
+    }
+  });
+
+  function friendlyError(code) {
+    switch (code) {
+      case 'auth/email-already-in-use': return 'Ye email pehle se registered hai. Login karo.';
+      case 'auth/invalid-email': return 'Email sahi format me daalo.';
+      case 'auth/weak-password': return 'Password kam se kam 6 characters ka hona chahiye.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential': return 'Email ya password galat hai.';
+      default: return 'Kuch gadbad ho gayi. Dobara try karo.';
+    }
+  }
 </script>
 
 </body>
