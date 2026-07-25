@@ -213,9 +213,37 @@
   }
 
   footer {
-    text-align: center;
-    padding: 24px;
+    padding: 40px 6% 24px;
     background: #0f172a;
+    color: #94a3b8;
+    font-size: 13px;
+  }
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .footer-brand .logo { margin-bottom: 8px; }
+  .footer-brand p { color: #64748b; font-size: 13px; line-height: 1.6; }
+  .footer-col h4 {
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .footer-col a, .footer-col p {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13.5px;
+    line-height: 2;
+  }
+  .footer-col a:hover { color: #22c55e; }
+  .footer-col a.highlight { color: #22c55e; font-weight: 600; }
+  .footer-bottom {
+    border-top: 1px solid #1f2937;
+    margin-top: 30px;
+    padding-top: 18px;
+    text-align: center;
     color: #64748b;
     font-size: 12px;
   }
@@ -322,7 +350,37 @@
 </section>
 
 <footer>
-  © 2026 Vishal Consulting. All Rights Reserved.
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">📈 Vishal Consulting</div>
+      <p>Empowering people to make smarter financial decisions with trusted Demat account guidance and support since 2024.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="#">Why Choose Us</a>
+      <a href="#">Founder</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Building/Flat No.: 69</p>
+      <p>Road/Street: Bhagwanpur to Lalganj Road</p>
+      <p>Locality: Bhagwanpur</p>
+      <p>City/Village: Bhagwanpur</p>
+      <p>District: Vaishali</p>
+      <p>State: Bihar</p>
+      <p>PIN Code: 844114</p>
+      <a href="mailto:contact@vishalconsulting.in" class="highlight">contact@vishalconsulting.in</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Vishal Consulting. All Rights Reserved.
+  </div>
 </footer>
 
 </body>
