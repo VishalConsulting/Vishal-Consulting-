@@ -261,6 +261,25 @@
     margin-top: 14px;
     text-decoration: none;
   }
+  .badge-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 280px;
+    margin: 0 auto 24px;
+  }
+  .badge-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .badge-blue { background: rgba(37,99,235,.12); border: 1px solid #2563eb; color: #60a5fa; }
+  .badge-green { background: rgba(34,197,94,.12); border: 1px solid #22c55e; color: #22c55e; }
   .footer-bottom {
     border-top: 1px solid #1f2937;
     margin-top: 30px;
@@ -280,7 +299,11 @@
 
 <section class="hero">
   <div class="eyebrow">India's Trusted Financial Growth Partner</div>
-  <div style="margin-bottom:16px;"><a href="certificate.pdf" target="_blank" class="cert-badge">✅ Government Certified (MSME)</a></div>
+  <div class="badge-row">
+    <a href="#how" class="badge-pill badge-blue">⚡ Join Our Community</a>
+    <a href="certificate.pdf" target="_blank" class="badge-pill badge-green">✅ Government Certified</a>
+    <a href="certificate.pdf" target="_blank" class="badge-pill badge-blue">🏅 View Certificate</a>
+  </div>
   <h1>Master Your Money with <span>Expert Guidance</span> & the Right Demat Account</h1>
   <p>Compare India's top brokers, open your free Demat account, and build real financial skills with our step-by-step guidance — all in one place.</p>
   <div class="hero-btns">
@@ -386,6 +409,7 @@
       <a href="#how">How It Works</a>
       <a href="#">Why Choose Us</a>
       <a href="#">Founder</a>
+      <a href="certificate.pdf" target="_blank" class="highlight">Government Certificate</a>
       <a href="privacy-policy.html">Privacy Policy</a>
     </div>
 
