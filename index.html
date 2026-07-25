@@ -25,7 +25,8 @@
     z-index: 100;
   }
 
-  .logo { font-size: 22px; font-weight: 800; color: #22c55e; }
+  .logo { font-size: 22px; font-weight: 800; color: #22c55e; display: flex; align-items: center; gap: 8px; }
+  .logo img { height: 34px; width: auto; }
 
   .nav-btn {
     padding: 9px 18px;
@@ -322,7 +323,7 @@
 <body>
 
 <header>
-  <div class="logo">📈 Vishal Consulting</div>
+  <div class="logo"><img src="logo.png" alt="Vishal Consulting Logo"> Vishal Consulting</div>
   <a href="login.html" class="nav-btn">Login</a>
 </header>
 
@@ -455,7 +456,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="logo">📈 Vishal Consulting</div>
+      <div class="logo"><img src="logo.png" alt="Vishal Consulting Logo"> Vishal Consulting</div>
       <p>Empowering people to make smarter financial decisions with trusted Demat account guidance and support since 2024.</p>
     </div>
 
