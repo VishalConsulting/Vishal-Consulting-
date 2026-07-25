@@ -226,7 +226,7 @@
       'auth/weak-password': 'Password kam se kam 6 characters ka hona chahiye.',
       'auth/missing-password': 'Password daalein.'
     };
-    return map[code] || 'Kuch galat ho gaya. Dobara try karein.';
+    return map[code] || ('Error: ' + code);
   }
 
   // LOGIN
