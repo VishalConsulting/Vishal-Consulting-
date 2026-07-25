@@ -188,7 +188,7 @@
   // If already logged in, skip straight to home page
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      window.location.href = "index.html";
+      window.location.href = "home.html";
     }
   });
 
@@ -246,7 +246,7 @@
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         successMsg.textContent = '✅ Login successful! Redirecting...';
-        setTimeout(() => window.location.href = 'index.html', 1000);
+        setTimeout(() => window.location.href = 'home.html', 1000);
       })
       .catch((err) => {
         loginError.textContent = friendlyError(err.code);
@@ -272,7 +272,7 @@
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         successMsg.textContent = '✅ Account created! Redirecting...';
-        setTimeout(() => window.location.href = 'index.html', 1000);
+        setTimeout(() => window.location.href = 'home.html', 1000);
       })
       .catch((err) => {
         signupError.textContent = friendlyError(err.code);
