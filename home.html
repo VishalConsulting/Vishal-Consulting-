@@ -61,6 +61,72 @@
 
   gtag('config', 'G-58HJPVRR9Q');
 </script>
+<style>
+  .broker-nxt-card {
+    background: #f8fafc;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 24px 20px;
+    margin: 20px auto;
+    max-width: 420px;
+    border-top: 4px solid #f59e0b;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  }
+  .broker-nxt-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .broker-nxt-logo { width: 56px; height: 56px; border-radius: 10px; object-fit: contain; background: #fff; border: 1px solid #e2e8f0; padding: 6px; }
+  .broker-nxt-top h2 { font-size: 19px; margin-bottom: 6px; }
+  .broker-nxt-badges span {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-right: 6px;
+  }
+  .badge-active { background: #dcfce7; color: #16a34a; }
+  .badge-both { background: #f1f5f9; color: #475569; }
+
+  .broker-nxt-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .price-box { text-align: center; border-radius: 12px; padding: 16px 8px; }
+  .price-box.activation { background: #ecfdf5; border: 1px solid #86efac; }
+  .price-box.account-open { background: #eff6ff; border: 1px solid #93c5fd; }
+  .price-box .icon-circle {
+    width: 34px; height: 34px; border-radius: 8px; margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px;
+  }
+  .activation .icon-circle { background: #22c55e; }
+  .account-open .icon-circle { background: #2563eb; }
+  .price-box .label { font-size: 11px; font-weight: 700; letter-spacing: .5px; color: #475569; }
+  .price-box .amount { font-size: 22px; font-weight: 800; margin-top: 4px; }
+  .activation .amount { color: #16a34a; }
+  .account-open .amount { color: #2563eb; }
+
+  .broker-nxt-section-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: #475569;
+    letter-spacing: .5px; margin: 16px 0 10px;
+  }
+  .nxt-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px; margin-bottom: 10px;
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700; color: #fff;
+    cursor: pointer; text-decoration: none;
+  }
+  .btn-process { background: linear-gradient(135deg, #a855f7, #ec4899); }
+  .btn-trade { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+  .btn-accvid { background: linear-gradient(135deg, #22c55e, #16a34a); }
+  .btn-referral { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  .broker-nxt-rate {
+    border-top: 1px solid #e2e8f0;
+    margin-top: 16px;
+    padding-top: 14px;
+    font-size: 13.5px;
+  }
+  .broker-nxt-rate .fire-title { font-weight: 800; margin-bottom: 8px; }
+  .broker-nxt-rate p { margin: 3px 0; color: #334155; }
+</style>
 </head>
 <a href="https://wa.me/918777240537" class="whatsapp">
 💬
@@ -134,72 +200,118 @@ Compare the top Demat Accounts in India and choose the right broker for your inv
 </a>
 
  </section>
-  <div class="card">
-
-
-<span class="premium-badge">🔥 TOP PICK</span>
-<img src="angelone.png" alt="Angel One Logo" class="broker-logo">
-<h2>Angel One</h2>
-<p>⭐ 4.8/5 Rating</p>
-<p>Open FREE Demat Account</p>
-    <a href="angel-one-review.html" class="video-btn">
-📖 Read Full Review
-</a>
-
-
-   
-    <button class="copy-btn" onclick="copyReferralLink()">
-📋 Copy Link
-</button>
-
-<script>
-function copyReferralLink() {
-  const link = "https://angel-one.onelink.me/Wjgr/0r049v0s";
-  navigator.clipboard.writeText(link).then(function() {
-    alert("✅ Angel One Referral Link Copied!");
-  });
-}
-</script>
-    <a href="https://angel-one.onelink.me/Wjgr/0r049v0s" class="btn">Open Account</a>
-<a href="YOUR_VIDEO_LINK" class="video-btn" target="_blank">
-🎥 Copy Trade Video
-  
-</a>
-</div>
-
-  <div class="card">
-    <span class="premium-badge">TOP PICK</span>
-    <img src="groww.jpg" alt="Groww logo" class="broker-logo">
-    <h2>📈 Groww</h2>
-    <p>⭐ 4.7 Rating</p>
-    <p>Stocks & Mutual Funds</p>
-
-    <button class="copy">Copy Link</button>
-    <button class="open">Open Account</button>
-    <a href="groww-review.html" class="video-btn">
-📖 Read Full Review
-</a>
-  <a href="YOUR_VIDEO_LINK" class="video-btn" target="_blank">
-🎥 Copy Trade Video
-</a>
+  <div class="broker-nxt-card">
+    <div class="broker-nxt-top">
+      <img src="angelone.png" alt="Angel One Logo" class="broker-nxt-logo">
+      <div>
+        <h2>ANGEL ONE NXT</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹300</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹200</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <button class="nxt-btn btn-process" onclick="copyLink('https://angel-one.onelink.me/Wjgr/0r049v0s','Process Video')">📋 Copy Process Video</button>
+    <button class="nxt-btn btn-trade" onclick="copyLink('YOUR_VIDEO_LINK','Trade Video')">📋 Copy Trade Video</button>
+    <button class="nxt-btn btn-accvid" onclick="copyLink('YOUR_VIDEO_LINK','Account Open Video Link')">📋 Copy Account Open Video Link</button>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('https://angel-one.onelink.me/Wjgr/0r049v0s','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 ANGEL ONE NXT 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: 200₹</p>
+      <p><b>With Trade</b> : 300₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
   </div>
 
-  <div class="card">
-    <span class="premium-badge">TOP PICK</span>
-    <img src="upstox.png" alt="Upstox" class="broker-logo">
-    <h2>🚀 Upstox</h2>
-    <p>⭐ 4.7 Rating</p>
-    <p>Fast Trading Platform</p>
-
-    <button class="copy">Copy Link</button>
-    <button class="open">Open Account</button>
-    <a href="upstox-review.html" class="video-btn">
-📖 Read Full Review
-</a>
-  <a href="YOUR_VIDEO_LINK" class="video-btn" target="_blank">
-🎥 Copy Trade Video
-</a>
+  <div class="broker-nxt-card" style="border-top-color:#22c55e;">
+    <div class="broker-nxt-top">
+      <img src="groww.jpg" alt="Groww Logo" class="broker-nxt-logo">
+      <div>
+        <h2>GROWW</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹XXX</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹XXX</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <button class="nxt-btn btn-process" onclick="copyLink('YOUR_VIDEO_LINK','Process Video')">📋 Copy Process Video</button>
+    <button class="nxt-btn btn-trade" onclick="copyLink('YOUR_VIDEO_LINK','Trade Video')">📋 Copy Trade Video</button>
+    <button class="nxt-btn btn-accvid" onclick="copyLink('YOUR_VIDEO_LINK','Account Open Video Link')">📋 Copy Account Open Video Link</button>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('YOUR_REFERRAL_LINK','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 GROWW 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: XXX₹</p>
+      <p><b>With Trade</b> : XXX₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
   </div>
+
+  <div class="broker-nxt-card" style="border-top-color:#2563eb;">
+    <div class="broker-nxt-top">
+      <img src="upstox.png" alt="Upstox Logo" class="broker-nxt-logo">
+      <div>
+        <h2>UPSTOX</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹XXX</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹XXX</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <button class="nxt-btn btn-process" onclick="copyLink('YOUR_VIDEO_LINK','Process Video')">📋 Copy Process Video</button>
+    <button class="nxt-btn btn-trade" onclick="copyLink('YOUR_VIDEO_LINK','Trade Video')">📋 Copy Trade Video</button>
+    <button class="nxt-btn btn-accvid" onclick="copyLink('YOUR_VIDEO_LINK','Account Open Video Link')">📋 Copy Account Open Video Link</button>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('YOUR_REFERRAL_LINK','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 UPSTOX 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: XXX₹</p>
+      <p><b>With Trade</b> : XXX₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
+  </div>
+
+  <script>
+    function copyLink(link, label) {
+      navigator.clipboard.writeText(link).then(function() {
+        alert("✅ " + label + " Copied!");
+      });
+    }
+  </script>
 
 </section>
 <section class="features">
