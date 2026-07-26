@@ -191,6 +191,43 @@
   .dash-stat-box .stat-icon { font-size: 18px; margin-bottom: 6px; }
   .dash-stat-box .stat-label { font-size: 12px; color: #78350f; font-weight: 600; }
   .dash-stat-box .stat-amount { font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 2px; }
+
+  .menu-list {
+    max-width: 420px;
+    margin: 24px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .menu-item {
+    background: #fff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .menu-item:active { transform: scale(.98); }
+  .menu-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .menu-text { flex: 1; }
+  .menu-text h4 { font-size: 16px; margin-bottom: 3px; }
+  .menu-text p { font-size: 12.5px; color: #64748b; }
+  .menu-arrow { color: #94a3b8; font-size: 18px; }
+
+  #campaignsSection { display: none; }
 </style>
 </head>
 <a href="https://wa.me/918777240537" class="whatsapp">
@@ -244,6 +281,76 @@
     </div>
   </div>
 
+  <div class="menu-list">
+    <a class="menu-item" onclick="showToast('My Report')">
+      <div class="menu-icon" style="background:#f1f5f9; color:#475569;">📋</div>
+      <div class="menu-text"><h4>My Report</h4><p>View all your work &amp; payment history</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('My Team Members')">
+      <div class="menu-icon" style="background:#eef2ff; color:#4f46e5;">👥</div>
+      <div class="menu-text"><h4>My Team Members</h4><p>View your referrals &amp; their performance</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showCampaigns()">
+      <div class="menu-icon" style="background:#ecfdf5; color:#16a34a;">₹</div>
+      <div class="menu-text"><h4>Campaigns</h4><p>View Campaign Instructions</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Work Analysis')">
+      <div class="menu-icon" style="background:#f5f3ff; color:#7c3aed;">📈</div>
+      <div class="menu-text"><h4>Work Analysis</h4><p>Analyze your performance</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Rewards & Offers')">
+      <div class="menu-icon" style="background:#fdf2f8; color:#db2777;">🎁</div>
+      <div class="menu-text"><h4>Rewards &amp; Offers</h4><p>Win Free Rewards</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Top Performers')">
+      <div class="menu-icon" style="background:#eff6ff; color:#2563eb;">🏆</div>
+      <div class="menu-text"><h4>Top Performers</h4><p>Check top community earners</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('My Profile')">
+      <div class="menu-icon" style="background:#f5f3ff; color:#7c3aed;">👤</div>
+      <div class="menu-text"><h4>My Profile</h4><p>Manage your account settings</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Training Center')">
+      <div class="menu-icon" style="background:#fef2f2; color:#dc2626;">🎥</div>
+      <div class="menu-text"><h4>Training Center</h4><p>Learn with video tutorials &amp; resources</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Your Earnings')">
+      <div class="menu-icon" style="background:#f5f3ff; color:#7c3aed;">₹</div>
+      <div class="menu-text"><h4>Your Earnings</h4><p>View detailed earnings breakdown</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Withdrawal')">
+      <div class="menu-icon" style="background:#ecfdf5; color:#16a34a;">👛</div>
+      <div class="menu-text"><h4>Withdrawal</h4><p>Withdraw your earnings instantly</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+    <a class="menu-item" onclick="showToast('Submit My Work')">
+      <div class="menu-icon" style="background:#eff6ff; color:#2563eb;">⬆️</div>
+      <div class="menu-text"><h4>Submit My Work</h4><p>Submit Your Work Now</p></div>
+      <div class="menu-arrow">→</div>
+    </a>
+  </div>
+
+  <script>
+    function showToast(name) {
+      alert("🚧 " + name + " — Coming Soon!");
+    }
+    function showCampaigns() {
+      const el = document.getElementById('campaignsSection');
+      el.style.display = 'block';
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+  <div id="campaignsSection">
 <h2 class="section-title">🏦 Top Demat Account Offers</h2>
 <p class="section-subtitle">
 Compare India's Best Stock Brokers & Open Your Free Demat Account
@@ -374,160 +481,12 @@ Compare the top Demat Accounts in India and choose the right broker for your inv
     }
   </script>
 
-<section class="features">
-<section class="compare">
+  </div>
 
-<h2>📊 Compare Top Brokers</h2>
-
-<table>
-
-<tr>
-<th>Broker</th>
-<th>AMC</th>
-<th>Account Opening</th>
-</tr>
-
-<tr>
-<td>Angel One</td>
-<td>₹0</td>
-<td>Free</td>
-</tr>
-
-<tr>
-<td>Groww</td>
-<td>₹0</td>
-<td>Free</td>
-</tr>
-
-<tr>
-<td>Upstox</td>
-<td>₹0</td>
-<td>Free</td>
-</tr>
-
-<tr>
-<td>Dhan</td>
-<td>₹0</td>
-<td>Free</td>
-</tr>
-
-<tr>
-<td>Zerodha</td>
-<td>₹300</td>
-<td>Paid</td>
-</tr>
-
-</table>
-
-</section>
-  </table>
-</section>
-
-<section class="reviews">
-<h2>⭐ User Reviews</h2>
-
-<div class="card">
-<b>Rahul Kumar</b>
-<p>⭐⭐⭐⭐⭐</p>
-<p>Angel One account 10 minutes me open ho gaya.</p>
-</div>
-
-<div class="card">
-<b>Aman Singh</b>
-<p>⭐⭐⭐⭐⭐</p>
-<p>Groww ka interface bahut easy hai.</p>
-</div>
-
-</section>
-
-<h2>Why Choose Vishal Consulting?</h2>
-<h2>Why Choose Vishal Consulting?</h2>
-
-<div class="feature-grid">
-
-<div class="feature">
-<h3>🔒 Trusted Partners</h3>
-<p>Only official broker referral links.</p>
-</div>
-
-<div class="feature">
-<h3>⚡ Fast Account Opening</h3>
-<p>Open your Demat account in minutes.</p>
-</div>
-
-<div class="feature">
-<h3>🎁 Latest Offers</h3>
-<p>Get the latest joining benefits and rewards.</p>
-</div>
-
-<div class="feature">
-<h3>📞 Free Support</h3>
-<p>Need help? Contact us anytime.</p>
-</div>
-
-</div>
-
-</section>
-<section id="about">
-  <h2>About Vishal Consulting</h2>
-<section class="founder-card">
-
-<img src="founder.jpg" alt="Founder" class="founder-img">
-
-<div class="verified-badge">
-✅ Verified Founder
-</div>
-
-<h2>Vishal Kumar</h2>
-
-<p class="role">Founder & CEO</p>
-
-<p class="bio">
-Welcome to Vishal Consulting. My mission is to help people choose the best Demat Account, Trading Platform, Credit Card and Financial Services through trusted information and official partner links.
-</p>
-
-<div class="socials">
-<a href="https://instagram.com/not_sanskari_boy_0" target="_blank">
-📷 Follow on Instagram
-</a>
-</div>
-
-<a href="https://instagram.com/not_sanskari_boy_0" target="_blank" class="message-btn">
-💬 Message Founder
-</a>
-
-</section>
-  <p>
-    We help users compare India's best Demat Accounts and choose the right broker.
-  </p>
-</section>
-
-<section id="contact">
-  <h2>Contact Us</h2>
-
-  <p>Email: contact@vishalconsulting.in</p>
-</section>
-
-<footer class="footer">
-
-<h2>📈 Vishal Consulting</h2>
-
-<p>Your Trusted Financial Partner</p>
-
-<div class="footer-links">
-<a href="privacy-policy.html">Privacy Policy</a>
-<a href="disclaimer.html">Disclaimer</a>
-<a href="terms.html">Terms & Conditions</a>
-</div>
-
-<p>© 2026 Vishal Consulting. All Rights Reserved.</p>
-
-</footer>
 <nav class="bottom-nav">
-  <a href="#home">🏠<br>Home</a>
   <a href="#apps">📱<br>Apps</a>
-  <a href="#compare">📊<br>Compare</a>
-  <a href="#contact">☎️<br>Contact</a>
+  <a href="index.html">🏠<br>Landing</a>
+  <a onclick="logoutUser()">🚪<br>Logout</a>
 </nav>
 </body>
 </html>
