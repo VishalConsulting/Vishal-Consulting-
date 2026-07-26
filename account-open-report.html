@@ -104,6 +104,8 @@
 
     addDoc(collection(db, 'account_open_reports'), {
       campaign, custName, custMobile, notes, submittedBy,
+      uid: window.currentUser.uid,
+      status: 'Pending',
       createdAt: serverTimestamp()
     }).then(() => {
       statusEl.textContent = '✅ Report submitted successfully!';
