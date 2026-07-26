@@ -3,7 +3,7 @@
 <head>
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import { getAuth, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
@@ -17,6 +17,8 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  setPersistence(auth, browserSessionPersistence);
+
   document.documentElement.style.visibility = "hidden";
 
   onAuthStateChanged(auth, (user) => {
@@ -25,6 +27,13 @@
     } else {
       document.documentElement.style.visibility = "visible";
       window.currentUser = user;
+      const nameEl = document.getElementById('dashUserName');
+      const avatarEl = document.getElementById('dashAvatar');
+      if (nameEl) {
+        const displayName = user.displayName || user.email.split('@')[0];
+        nameEl.textContent = displayName;
+        if (avatarEl) avatarEl.textContent = displayName.charAt(0).toUpperCase();
+      }
     }
   });
 
@@ -126,6 +135,62 @@
   }
   .broker-nxt-rate .fire-title { font-weight: 800; margin-bottom: 8px; }
   .broker-nxt-rate p { margin: 3px 0; color: #334155; }
+
+  .dash-card {
+    max-width: 420px;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    border-radius: 24px;
+    padding: 30px 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(245,158,11,.3);
+  }
+  .dash-avatar {
+    width: 90px; height: 90px;
+    background: #0f172a;
+    color: #fff;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: 800;
+    margin: 0 auto 16px;
+  }
+  .dash-card h2 { color: #0f172a; font-size: 26px; margin-bottom: 12px; }
+  .verified-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: #16a34a;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .dash-tagline {
+    color: #78350f;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 22px;
+  }
+  .dash-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .dash-stat-box {
+    background: #fffbeb;
+    border-radius: 14px;
+    padding: 16px 8px;
+    text-align: left;
+  }
+  .dash-stat-box .stat-icon { font-size: 18px; margin-bottom: 6px; }
+  .dash-stat-box .stat-label { font-size: 12px; color: #78350f; font-weight: 600; }
+  .dash-stat-box .stat-amount { font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 2px; }
 </style>
 </head>
 <a href="https://wa.me/918777240537" class="whatsapp">
@@ -183,6 +248,36 @@
 </section>
 
 <section id="apps" class="container">
+
+  <div class="dash-card">
+    <div class="dash-avatar" id="dashAvatar">V</div>
+    <h2 id="dashUserName">User</h2>
+    <div class="verified-pill">✅ Verified Member</div>
+    <div class="dash-tagline">🚀 Zero Investment Platform</div>
+    <div class="dash-stats">
+      <div class="dash-stat-box">
+        <div class="stat-icon">₹</div>
+        <div class="stat-label">Today</div>
+        <div class="stat-amount">₹0</div>
+      </div>
+      <div class="dash-stat-box">
+        <div class="stat-icon">📈</div>
+        <div class="stat-label">7 Days</div>
+        <div class="stat-amount">₹0</div>
+      </div>
+      <div class="dash-stat-box">
+        <div class="stat-icon">🎁</div>
+        <div class="stat-label">30 Days</div>
+        <div class="stat-amount">₹0</div>
+      </div>
+      <div class="dash-stat-box">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-label">All Time</div>
+        <div class="stat-amount">₹0</div>
+      </div>
+    </div>
+  </div>
+
 <h2 class="section-title">🏦 Top Demat Account Offers</h2>
 <p class="section-subtitle">
 Compare India's Best Stock Brokers & Open Your Free Demat Account
@@ -313,7 +408,6 @@ Compare the top Demat Accounts in India and choose the right broker for your inv
     }
   </script>
 
-</section>
 <section class="features">
 <section class="compare">
 
