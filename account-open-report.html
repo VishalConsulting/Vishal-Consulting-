@@ -106,15 +106,11 @@
       campaign, custName, custMobile, notes, submittedBy,
       createdAt: serverTimestamp()
     }).then(() => {
-      statusEl.textContent = '✅ Report saved! Opening WhatsApp...';
+      statusEl.textContent = '✅ Report submitted successfully!';
       statusEl.className = 'status-msg status-ok';
-      const msg = `*New Account Open Report*%0A%0A📱 Campaign: ${encodeURIComponent(campaign)}%0A👤 Customer Name: ${encodeURIComponent(custName)}%0A📞 Mobile: ${encodeURIComponent(custMobile)}%0A📝 Notes: ${encodeURIComponent(notes || 'N/A')}%0A👨‍💼 Submitted By: ${encodeURIComponent(submittedBy)}`;
-      setTimeout(() => {
-        window.open('https://api.whatsapp.com/send?text=' + msg, '_blank');
-        document.getElementById('reportForm').reset();
-        btn.disabled = false;
-        btn.textContent = '✓ Submit Report';
-      }, 800);
+      document.getElementById('reportForm').reset();
+      btn.disabled = false;
+      btn.textContent = '✓ Submit Report';
     }).catch((err) => {
       statusEl.textContent = 'Error: ' + err.message;
       statusEl.className = 'status-msg status-err';
