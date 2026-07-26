@@ -150,6 +150,12 @@
     <!-- SIGNUP FORM -->
     <div class="form-section" id="signupSection">
       <form id="signupForm" novalidate>
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" placeholder="Your full name" required>
+
+        <label for="signupPhone">Phone Number</label>
+        <input type="tel" id="signupPhone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" maxlength="10">
+
         <label for="signupEmail">Email</label>
         <input type="email" id="signupEmail" placeholder="you@example.com" required>
 
@@ -170,8 +176,17 @@
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    onAuthStateChanged
+    onAuthStateChanged,
+    updateProfile,
+    setPersistence,
+    browserSessionPersistence
   } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
@@ -184,8 +199,12 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  // If already logged in, skip straight to home page
+  // Session-only login: user must log in again every time they open the site fresh
+  setPersistence(auth, browserSessionPersistence);
+
+  // If already logged in (within this session), skip straight to home page
   onAuthStateChanged(auth, (user) => {
     if (user) {
       window.location.href = "home.html";
@@ -266,10 +285,22 @@
     signupBtn.disabled = true;
     signupBtn.textContent = 'Creating account...';
 
+    const name = document.getElementById('signupName').value.trim();
+    const phone = document.getElementById('signupPhone').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value.trim();
 
     createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        const user = result.user;
+        return updateProfile(user, { displayName: name })
+          .then(() => setDoc(doc(db, 'users', user.uid), {
+            name: name,
+            phone: phone,
+            email: email,
+            createdAt: serverTimestamp()
+          }));
+      })
       .then(() => {
         successMsg.textContent = '✅ Account created! Redirecting...';
         setTimeout(() => window.location.href = 'home.html', 1000);
