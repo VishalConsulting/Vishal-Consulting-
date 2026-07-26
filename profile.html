@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Vishal Consulting</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #0b1120; color: #fff; }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 5%;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  header .back-btn { color: #d97706; text-decoration: none; font-size: 20px; font-weight: 700; }
+  header img.brand-logo { height: 30px; }
+  header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
+
+  .hero-banner {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    text-align: center;
+    padding: 34px 20px;
+  }
+  .avatar-circle {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: #fff;
+    color: #ea580c;
+    font-size: 34px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .hero-banner h2 { font-size: 24px; color: #0f172a; margin-bottom: 4px; }
+  .hero-banner .email-text { color: #78350f; font-size: 13.5px; margin-bottom: 14px; word-break: break-all; }
+  .badge-pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 20px; margin: 0 4px; }
+  .badge-white { background: #fff; color: #d97706; }
+  .badge-dark { background: #0f172a; color: #fff; }
+  .upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 18px;
+    cursor: pointer;
+  }
+  .hero-banner .upload-note { font-size: 11.5px; color: #78350f; margin-top: 10px; }
+
+  .page-wrap { max-width: 460px; margin: 0 auto; padding: 24px 5% 40px; }
+
+  .section-box {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .section-box h2 { font-size: 22px; margin-bottom: 4px; }
+  .section-box .desc { color: #64748b; font-size: 13.5px; margin-bottom: 18px; }
+
+  label { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; margin-bottom: 8px; margin-top: 14px; }
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: #0f172a;
+  }
+  input:disabled { background: #e2e8f0; color: #94a3b8; }
+  .hint { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+  .save-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .save-btn:disabled { background: #93c5fd; cursor: not-allowed; }
+
+  .status-msg { font-size: 13px; margin-top: 10px; min-height: 16px; }
+  .status-ok { color: #16a34a; }
+  .status-err { color: #dc2626; }
+
+  .account-info-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .account-info-box h2 { font-size: 22px; margin-bottom: 16px; }
+  .info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #fde68a; }
+  .info-row:last-child { border-bottom: none; }
+  .info-row span.label { color: #78350f; font-size: 14px; }
+  .info-pill { background: #fff; border: 1px solid #fde68a; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .code-pill { background: #0f172a; color: #f59e0b; padding: 6px 14px; border-radius: 8px; font-weight: 800; font-family: monospace; font-size: 14px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="back-btn">←</a>
+    <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
+    <span class="brand-name">Vishal Consulting</span>
+  </header>
+
+  <div class="hero-banner">
+    <div class="avatar-circle" id="profAvatar">V</div>
+    <h2 id="profName">User</h2>
+    <div class="email-text" id="profEmail">user@example.com</div>
+    <span class="badge-pill badge-white">✓ Verified User</span>
+    <span class="badge-pill badge-dark">Member Group</span>
+    <br>
+    <button class="upload-btn" onclick="alert('🚧 Photo upload coming soon!')">📷 Upload Photo</button>
+    <div class="upload-note">JPG, PNG up to 2MB • Stored securely on server</div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="section-box">
+      <h2>Personal Information</h2>
+      <p class="desc">Update your personal details</p>
+
+      <label>👤 Full Name</label>
+      <input type="text" id="editName">
+
+      <label>✉️ Email Address</label>
+      <input type="email" id="editEmail" disabled>
+      <div class="hint">Email cannot be changed</div>
+
+      <button class="save-btn" id="saveNameBtn">Save Changes</button>
+      <div class="status-msg" id="nameStatus"></div>
+    </div>
+
+    <div class="section-box">
+      <h2>Change Password</h2>
+      <p class="desc">Update your password</p>
+
+      <label>🔒 New Password</label>
+      <input type="password" id="newPassword" placeholder="Enter new password">
+
+      <label>🔒 Confirm New Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm new password">
+
+      <button class="save-btn" id="updatePassBtn">Update Password</button>
+      <div class="status-msg" id="passStatus"></div>
+    </div>
+
+    <div class="account-info-box">
+      <h2>Account Information</h2>
+      <div class="info-row"><span class="label">Role:</span><span class="info-pill">User</span></div>
+      <div class="info-row"><span class="label">User Group:</span><span class="info-pill">Default</span></div>
+      <div class="info-row"><span class="label">TL Code:</span><span class="code-pill" id="tlCode">--------</span></div>
+    </div>
+
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence,
+    updateProfile, updatePassword
+  } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  setPersistence(auth, browserSessionPersistence);
+
+  document.documentElement.style.visibility = "hidden";
+  let currentUser = null;
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+    currentUser = user;
+    document.documentElement.style.visibility = "visible";
+
+    const displayName = user.displayName || user.email.split('@')[0];
+    document.getElementById('profAvatar').textContent = displayName.substring(0,2).toUpperCase();
+    document.getElementById('profName').textContent = displayName;
+    document.getElementById('profEmail').textContent = user.email;
+    document.getElementById('editName').value = displayName;
+    document.getElementById('editEmail').value = user.email;
+    document.getElementById('tlCode').textContent = user.uid.substring(0,8).toUpperCase();
+  });
+
+  // Save name changes
+  document.getElementById('saveNameBtn').addEventListener('click', () => {
+    const newName = document.getElementById('editName').value.trim();
+    const statusEl = document.getElementById('nameStatus');
+    if (!newName) {
+      statusEl.textContent = 'Name khali nahi ho sakta.';
+      statusEl.className = 'status-msg status-err';
+      return;
+    }
+    updateProfile(currentUser, { displayName: newName })
+      .then(() => updateDoc(doc(db, 'users', currentUser.uid), { name: newName }))
+      .then(() => {
+        document.getElementById('profName').textContent = newName;
+        document.getElementById('profAvatar').textContent = newName.substring(0,2).toUpperCase();
+        statusEl.textContent = '✅ Name updated successfully!';
+        statusEl.className = 'status-msg status-ok';
+      })
+      .catch((err) => {
+        statusEl.textContent = 'Error: ' + err.message;
+        statusEl.className = 'status-msg status-err';
+      });
+  });
+
+  // Update password
+  document.getElementById('updatePassBtn').addEventListener('click', () => {
+    const pass1 = document.getElementById('newPassword').value.trim();
+    const pass2 = document.getElementById('confirmPassword').value.trim();
+    const statusEl = document.getElementById('passStatus');
+
+    if (pass1.length < 6) {
+      statusEl.textContent = 'Password kam se kam 6 characters ka hona chahiye.';
+      statusEl.className = 'status-msg status-err';
+      return;
+    }
+    if (pass1 !== pass2) {
+      statusEl.textContent = 'Dono passwords match nahi kar rahe.';
+      statusEl.className = 'status-msg status-err';
+      return;
+    }
+    updatePassword(currentUser, pass1)
+      .then(() => {
+        statusEl.textContent = '✅ Password updated successfully!';
+        statusEl.className = 'status-msg status-ok';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+      })
+      .catch((err) => {
+        if (err.code === 'auth/requires-recent-login') {
+          statusEl.textContent = 'Security ke liye dobara login karke try karo.';
+        } else {
+          statusEl.textContent = 'Error: ' + err.message;
+        }
+        statusEl.className = 'status-msg status-err';
+      });
+  });
+</script>
+
+</body>
+</html>
