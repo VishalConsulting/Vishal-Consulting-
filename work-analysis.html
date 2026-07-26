@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Analysis - Vishal Consulting</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #0b1120; color: #fff; }
+  header { display: flex; align-items: center; gap: 10px; padding: 14px 5%; background: #fff; border-bottom: 1px solid #e2e8f0; }
+  header .back-btn { color: #7c3aed; text-decoration: none; font-size: 20px; font-weight: 700; }
+  header img.brand-logo { height: 30px; }
+  header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
+
+  .page-wrap { max-width: 480px; margin: 0 auto; padding: 20px 5% 40px; }
+  h1 { font-size: 28px; margin-bottom: 20px; }
+
+  .card-box {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 18px;
+  }
+  .card-box h2 { font-size: 20px; margin-bottom: 4px; }
+  .card-box .desc { color: #64748b; font-size: 13.5px; margin-bottom: 18px; }
+  .chart-wrap { position: relative; height: 240px; }
+
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 20px; }
+  .stat-mini { background: #fff; border-radius: 12px; padding: 14px 8px; text-align: center; border: 1px solid #e2e8f0; }
+  .stat-mini .num { font-size: 22px; font-weight: 800; }
+  .stat-mini .lbl { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+  .approved-card { display: flex; justify-content: space-between; align-items: flex-start; }
+  .approved-card .num { font-size: 40px; font-weight: 800; margin-top: 6px; }
+  .approved-card .rate { color: #64748b; font-size: 13px; margin-top: 4px; }
+  .check-icon { font-size: 22px; color: #16a34a; }
+
+  .empty-msg { text-align: center; color: #64748b; padding: 20px; font-size: 13.5px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="back-btn">←</a>
+    <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
+    <span class="brand-name">Vishal Consulting</span>
+  </header>
+
+  <div class="page-wrap">
+    <h1>📈 Work Analysis</h1>
+
+    <div class="card-box">
+      <h2>Performance Overview</h2>
+      <p class="desc">Your task submission status</p>
+      <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+      <div class="stat-row">
+        <div class="stat-mini"><div class="num" id="cntPending">0</div><div class="lbl">Pending</div></div>
+        <div class="stat-mini"><div class="num" id="cntApproved">0</div><div class="lbl">Approved</div></div>
+        <div class="stat-mini"><div class="num" id="cntRejected">0</div><div class="lbl">Rejected</div></div>
+      </div>
+    </div>
+
+    <div class="card-box approved-card">
+      <div>
+        <h2>Approved Tasks</h2>
+        <div class="num" id="approvedBig">0</div>
+        <div class="rate" id="successRate">0.0% success rate</div>
+      </div>
+      <div class="check-icon">✅</div>
+    </div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  setPersistence(auth, browserSessionPersistence);
+
+  document.documentElement.style.visibility = "hidden";
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+    document.documentElement.style.visibility = "visible";
+    loadStats(user.uid);
+  });
+
+  async function loadStats(uid) {
+    let pending = 0, approved = 0, rejected = 0;
+
+    try {
+      const accSnap = await getDocs(query(collection(db, 'account_open_reports'), where('uid', '==', uid)));
+      const tradeSnap = await getDocs(query(collection(db, 'trade_reports'), where('uid', '==', uid)));
+
+      [...accSnap.docs, ...tradeSnap.docs].forEach(d => {
+        const status = d.data().status || 'Pending';
+        if (status === 'Approved') approved++;
+        else if (status === 'Rejected') rejected++;
+        else pending++;
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    document.getElementById('cntPending').textContent = pending;
+    document.getElementById('cntApproved').textContent = approved;
+    document.getElementById('cntRejected').textContent = rejected;
+    document.getElementById('approvedBig').textContent = approved;
+
+    const total = pending + approved + rejected;
+    const rate = total > 0 ? ((approved / total) * 100).toFixed(1) : '0.0';
+    document.getElementById('successRate').textContent = rate + '% success rate';
+
+    const ctx = document.getElementById('statusChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Pending', 'Approved', 'Rejected'],
+        datasets: [{
+          data: [pending, approved, rejected],
+          backgroundColor: ['#f59e0b', '#22c55e', '#ef4444'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
