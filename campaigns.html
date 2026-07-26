@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserSessionPersistence);
+
+  document.documentElement.style.visibility = "hidden";
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      document.documentElement.style.visibility = "visible";
+    }
+  });
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaigns - Vishal Consulting</title>
+<style>
+  * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #0b1120; margin: 0; padding: 20px 0 40px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 5%;
+    color: #fff;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .back-btn {
+    color: #22c55e;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .top-bar h1 { font-size: 18px; }
+
+  .section-title { text-align: center; color: #22c55e; font-size: 22px; margin: 10px 0 6px; }
+  .section-subtitle { text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 20px; padding: 0 20px; }
+
+  .broker-nxt-card {
+    background: #f8fafc;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 24px 20px;
+    margin: 20px auto;
+    max-width: 420px;
+    border-top: 4px solid #f59e0b;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  }
+  .broker-nxt-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .broker-nxt-logo { width: 56px; height: 56px; border-radius: 10px; object-fit: contain; background: #fff; border: 1px solid #e2e8f0; padding: 6px; }
+  .broker-nxt-top h2 { font-size: 19px; margin-bottom: 6px; }
+  .broker-nxt-badges span {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-right: 6px;
+  }
+  .badge-active { background: #dcfce7; color: #16a34a; }
+  .badge-both { background: #f1f5f9; color: #475569; }
+
+  .broker-nxt-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .price-box { text-align: center; border-radius: 12px; padding: 16px 8px; }
+  .price-box.activation { background: #ecfdf5; border: 1px solid #86efac; }
+  .price-box.account-open { background: #eff6ff; border: 1px solid #93c5fd; }
+  .price-box .icon-circle {
+    width: 34px; height: 34px; border-radius: 8px; margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px;
+  }
+  .activation .icon-circle { background: #22c55e; }
+  .account-open .icon-circle { background: #2563eb; }
+  .price-box .label { font-size: 11px; font-weight: 700; letter-spacing: .5px; color: #475569; }
+  .price-box .amount { font-size: 22px; font-weight: 800; margin-top: 4px; }
+  .activation .amount { color: #16a34a; }
+  .account-open .amount { color: #2563eb; }
+
+  .broker-nxt-section-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: #475569;
+    letter-spacing: .5px; margin: 16px 0 10px;
+  }
+  .nxt-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px; margin-bottom: 10px;
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700; color: #fff;
+    cursor: pointer; text-decoration: none;
+  }
+  .btn-process { background: linear-gradient(135deg, #a855f7, #ec4899); }
+  .btn-trade { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+  .btn-accvid { background: linear-gradient(135deg, #22c55e, #16a34a); }
+  .btn-referral { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  .broker-nxt-rate {
+    border-top: 1px solid #e2e8f0;
+    margin-top: 16px;
+    padding-top: 14px;
+    font-size: 13.5px;
+  }
+  .broker-nxt-rate .fire-title { font-weight: 800; margin-bottom: 8px; }
+  .broker-nxt-rate p { margin: 3px 0; color: #334155; }
+
+  .guide-card {
+    max-width: 420px;
+    margin: 0 auto 10px;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+  }
+  .guide-card p { color: #94a3b8; font-size: 13.5px; margin: 8px 0 14px; }
+  .guide-card .btn {
+    display: inline-block;
+    background: #22c55e;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="home.html" class="back-btn">←</a>
+    <h1>Campaigns</h1>
+  </div>
+
+  <h2 class="section-title">🏦 Top Demat Account Offers</h2>
+  <p class="section-subtitle">Compare India's Best Stock Brokers & Open Your Free Demat Account</p>
+
+  <div class="guide-card">
+    <h2>🏆 Best Demat Account in India 2026</h2>
+    <p>Compare the top Demat Accounts in India and choose the right broker for your investment journey.</p>
+    <a href="best-demat-account-india.html" class="btn">📖 Read Complete Guide</a>
+  </div>
+
+  <div class="broker-nxt-card">
+    <div class="broker-nxt-top">
+      <img src="angelone.png" alt="Angel One Logo" class="broker-nxt-logo">
+      <div>
+        <h2>ANGEL ONE NXT</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹300</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹200</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <a href="https://tinyurl.com/Vishal-Consulting" target="_blank" class="nxt-btn btn-process">🎥 Watch Process Video</a>
+    <a href="https://bit.ly/VishalConsulting" target="_blank" class="nxt-btn btn-trade">🎥 Watch Trade Video</a>
+    <a href="https://bit.ly/Vishalconsulting" target="_blank" class="nxt-btn btn-accvid">🎥 Watch Account Open Video</a>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('https://angel-one.onelink.me/Wjgr/0r049v0s','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 ANGEL ONE NXT 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: 200₹</p>
+      <p><b>With Trade</b> : 300₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
+  </div>
+
+  <div class="broker-nxt-card" style="border-top-color:#22c55e;">
+    <div class="broker-nxt-top">
+      <img src="Bajaj.png" alt="Bajaj Web Trade Logo" class="broker-nxt-logo">
+      <div>
+        <h2>BAJAJ WEB TRADE</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹200</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹0</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <button class="nxt-btn btn-process" onclick="copyLink('YOUR_VIDEO_LINK','Process Video')">📋 Copy Process Video</button>
+    <button class="nxt-btn btn-trade" onclick="copyLink('YOUR_VIDEO_LINK','Trade Video')">📋 Copy Trade Video</button>
+    <button class="nxt-btn btn-accvid" onclick="copyLink('YOUR_VIDEO_LINK','Account Open Video Link')">📋 Copy Account Open Video Link</button>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('https://ft.hatsconsulting.me/form?id=550&ref=TEAM','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 BAJAJ WEB TRADE 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: 0₹</p>
+      <p><b>With Trade</b> : 200₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
+  </div>
+
+  <div class="broker-nxt-card" style="border-top-color:#2563eb;">
+    <div class="broker-nxt-top">
+      <img src="upstox.png" alt="Upstox Logo" class="broker-nxt-logo">
+      <div>
+        <h2>UPSTOX</h2>
+        <div class="broker-nxt-badges"><span class="badge-active">● Active</span><span class="badge-both">both</span></div>
+      </div>
+    </div>
+    <div class="broker-nxt-prices">
+      <div class="price-box activation">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACTIVATION</div>
+        <div class="amount">₹XXX</div>
+      </div>
+      <div class="price-box account-open">
+        <div class="icon-circle">✓</div>
+        <div class="label">ACCOUNT OPEN</div>
+        <div class="amount">₹XXX</div>
+      </div>
+    </div>
+    <div class="broker-nxt-section-label">🎥 TUTORIALS</div>
+    <button class="nxt-btn btn-process" onclick="copyLink('YOUR_VIDEO_LINK','Process Video')">📋 Copy Process Video</button>
+    <button class="nxt-btn btn-trade" onclick="copyLink('YOUR_VIDEO_LINK','Trade Video')">📋 Copy Trade Video</button>
+    <button class="nxt-btn btn-accvid" onclick="copyLink('YOUR_VIDEO_LINK','Account Open Video Link')">📋 Copy Account Open Video Link</button>
+    <div class="broker-nxt-section-label">🔗 REFERRAL LINK</div>
+    <button class="nxt-btn btn-referral" onclick="copyLink('YOUR_REFERRAL_LINK','Referral Link')">📋 Copy Referral Link</button>
+    <div class="broker-nxt-rate">
+      <div class="fire-title">🔥 UPSTOX 🔥</div>
+      <div class="fire-title" style="margin-top:8px;">💵 RATE</div>
+      <p>LOGIN ONLY: XXX₹</p>
+      <p><b>With Trade</b> : XXX₹</p>
+      <p>Without Login Or Without Trade : 0₹</p>
+    </div>
+  </div>
+
+  <script>
+    function copyLink(link, label) {
+      navigator.clipboard.writeText(link).then(function() {
+        alert("✅ " + label + " Copied!");
+      });
+    }
+  </script>
+
+</body>
+</html>
