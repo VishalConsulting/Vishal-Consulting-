@@ -18,7 +18,7 @@
   document.documentElement.style.visibility = "hidden";
   onAuthStateChanged(auth, (user) => {
     if (!user) { window.location.href = "login.html"; }
-    else { document.documentElement.style.visibility = "visible"; }
+    else { document.documentElement.style.visibility = "visible"; window.currentUser = user; }
   });
 </script>
   <meta charset="UTF-8">
@@ -26,27 +26,102 @@
   <title>Trade Report - Vishal Consulting</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-  body { background: #0b1120; color: #fff; }
+  body { background: #0b1120; }
   header { display: flex; align-items: center; gap: 10px; padding: 14px 5%; background: #fff; border-bottom: 1px solid #e2e8f0; }
   header .back-btn { color: #2563eb; text-decoration: none; font-size: 20px; font-weight: 700; }
   header img.brand-logo { height: 30px; }
   header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
-  .empty-wrap { max-width: 440px; margin: 60px auto; text-align: center; padding: 0 20px; }
-  .empty-wrap .icon { font-size: 50px; margin-bottom: 16px; }
-  .empty-wrap h2 { font-size: 22px; margin-bottom: 10px; color: #22c55e; }
-  .empty-wrap p { color: #94a3b8; font-size: 14px; }
+  .top-strip { height: 4px; background: #3b82f6; }
+  .form-card { max-width: 440px; margin: 24px auto 40px; background: #f1f5f9; color: #0f172a; border-radius: 20px; padding: 26px 22px; }
+  .form-card h1 { font-size: 26px; margin-bottom: 6px; }
+  .form-card .desc { color: #64748b; font-size: 14px; margin-bottom: 22px; }
+  label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; margin-top: 16px; }
+  select, input, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; background: #fff; color: #0f172a; font-family: inherit; }
+  textarea { resize: vertical; min-height: 90px; }
+  .submit-btn { width: 100%; margin-top: 22px; padding: 15px; border: none; border-radius: 10px; background: #2563eb; color: #fff; font-weight: 700; font-size: 16px; cursor: pointer; }
+  .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+  .status-msg { font-size: 13px; margin-top: 12px; text-align: center; }
+  .status-ok { color: #16a34a; }
+  .status-err { color: #dc2626; }
 </style>
 </head>
 <body>
+  <div class="top-strip"></div>
   <header>
     <a href="submit.html" class="back-btn">←</a>
     <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
     <span class="brand-name">Vishal Consulting</span>
   </header>
-  <div class="empty-wrap">
-    <div class="icon">📈</div>
-    <h2>Trade Report Form</h2>
-    <p>Ye form jaldi hi yaha add hoga — ismein tum completed trades ki details submit kar paoge.</p>
+
+  <div class="form-card">
+    <h1>Report Details</h1>
+    <p class="desc">Select campaign and fill customer information</p>
+    <form id="reportForm">
+      <label>Select Application / Campaign *</label>
+      <select id="campaign" required>
+        <option value="">Choose a campaign</option>
+        <option value="Angel One NXT">Angel One NXT</option>
+        <option value="Bajaj Web Trade">Bajaj Web Trade</option>
+        <option value="Upstox">Upstox</option>
+      </select>
+      <label>Customer Name *</label>
+      <input type="text" id="custName" placeholder="Enter customer name" required>
+      <label>Customer Mobile *</label>
+      <input type="tel" id="custMobile" placeholder="Enter mobile number" pattern="[0-9]{10}" maxlength="10" required>
+      <label>Notes (Optional)</label>
+      <textarea id="notes" placeholder="Any additional details..."></textarea>
+      <button type="submit" class="submit-btn" id="submitBtn">✓ Submit Report</button>
+      <div class="status-msg" id="statusMsg"></div>
+    </form>
   </div>
+
+<script type="module">
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+  import { getApps, initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+  const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById('reportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const statusEl = document.getElementById('statusMsg');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    const campaign = document.getElementById('campaign').value;
+    const custName = document.getElementById('custName').value.trim();
+    const custMobile = document.getElementById('custMobile').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+    const submittedBy = (window.currentUser && (window.currentUser.displayName || window.currentUser.email)) || 'Unknown';
+
+    addDoc(collection(db, 'trade_reports'), {
+      campaign, custName, custMobile, notes, submittedBy,
+      createdAt: serverTimestamp()
+    }).then(() => {
+      statusEl.textContent = '✅ Report saved! Opening WhatsApp...';
+      statusEl.className = 'status-msg status-ok';
+      const msg = `*New Trade Report*%0A%0A📱 Campaign: ${encodeURIComponent(campaign)}%0A👤 Customer Name: ${encodeURIComponent(custName)}%0A📞 Mobile: ${encodeURIComponent(custMobile)}%0A📝 Notes: ${encodeURIComponent(notes || 'N/A')}%0A👨‍💼 Submitted By: ${encodeURIComponent(submittedBy)}`;
+      setTimeout(() => {
+        window.open('https://api.whatsapp.com/send?text=' + msg, '_blank');
+        document.getElementById('reportForm').reset();
+        btn.disabled = false;
+        btn.textContent = '✓ Submit Report';
+      }, 800);
+    }).catch((err) => {
+      statusEl.textContent = 'Error: ' + err.message;
+      statusEl.className = 'status-msg status-err';
+      btn.disabled = false;
+      btn.textContent = '✓ Submit Report';
+    });
+  });
+</script>
 </body>
 </html>
