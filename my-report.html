@@ -112,14 +112,18 @@
   }
 
   async function loadData(uid) {
-    const accSnap = await getDocs(query(collection(db, 'account_open_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
-    accountReports = accSnap.docs.map(d => d.data());
-    const tradeSnap = await getDocs(query(collection(db, 'trade_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
-    tradeReports = tradeSnap.docs.map(d => d.data());
+    try {
+      const accSnap = await getDocs(query(collection(db, 'account_open_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
+      accountReports = accSnap.docs.map(d => d.data());
+      const tradeSnap = await getDocs(query(collection(db, 'trade_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
+      tradeReports = tradeSnap.docs.map(d => d.data());
 
-    document.getElementById('tabAccount').textContent = `Account Open (${accountReports.length})`;
-    document.getElementById('tabTrade').textContent = `Trade Reports (${tradeReports.length})`;
-    renderList();
+      document.getElementById('tabAccount').textContent = `Account Open (${accountReports.length})`;
+      document.getElementById('tabTrade').textContent = `Trade Reports (${tradeReports.length})`;
+      renderList();
+    } catch (err) {
+      document.getElementById('listArea').innerHTML = '<div class="empty-state" style="color:#f87171;">⚠️ Error: ' + err.message + '</div>';
+    }
   }
 
   document.getElementById('tabAccount').addEventListener('click', () => {
