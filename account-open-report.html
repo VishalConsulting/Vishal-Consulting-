@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserSessionPersistence);
+  document.documentElement.style.visibility = "hidden";
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = "login.html"; }
+    else { document.documentElement.style.visibility = "visible"; }
+  });
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Open Report - Vishal Consulting</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #0b1120; color: #fff; }
+  header { display: flex; align-items: center; gap: 10px; padding: 14px 5%; background: #fff; border-bottom: 1px solid #e2e8f0; }
+  header .back-btn { color: #059669; text-decoration: none; font-size: 20px; font-weight: 700; }
+  header img.brand-logo { height: 30px; }
+  header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
+  .empty-wrap { max-width: 440px; margin: 60px auto; text-align: center; padding: 0 20px; }
+  .empty-wrap .icon { font-size: 50px; margin-bottom: 16px; }
+  .empty-wrap h2 { font-size: 22px; margin-bottom: 10px; color: #22c55e; }
+  .empty-wrap p { color: #94a3b8; font-size: 14px; }
+</style>
+</head>
+<body>
+  <header>
+    <a href="submit.html" class="back-btn">←</a>
+    <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
+    <span class="brand-name">Vishal Consulting</span>
+  </header>
+  <div class="empty-wrap">
+    <div class="icon">👤➕</div>
+    <h2>Account Open Report Form</h2>
+    <p>Ye form jaldi hi yaha add hoga — ismein tum successfully open kiye gaye accounts ki details submit kar paoge.</p>
+  </div>
+</body>
+</html>
