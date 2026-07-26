@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserSessionPersistence);
+
+  document.documentElement.style.visibility = "hidden";
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      document.documentElement.style.visibility = "visible";
+      const displayName = user.displayName || user.email.split('@')[0];
+      const nameEl = document.getElementById('userName');
+      const avatarEl = document.getElementById('userAvatar');
+      if (nameEl) nameEl.textContent = displayName;
+      if (avatarEl) avatarEl.textContent = displayName.substring(0,2).toUpperCase();
+    }
+  });
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Earnings - Vishal Consulting</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: linear-gradient(180deg, #7c3aed, #6d28d9 20%, #5b21b6); min-height: 100vh; }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 5%;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  header .back-btn { color: #6d28d9; text-decoration: none; font-size: 20px; font-weight: 700; }
+  header img.brand-logo { height: 30px; }
+  header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
+
+  .profile-card {
+    max-width: 440px;
+    margin: 24px auto 0;
+    background: #fff;
+    border-radius: 22px;
+    padding: 26px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-avatar {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7, #6d28d9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .profile-info h2 { font-size: 22px; color: #0f172a; margin-bottom: 10px; }
+  .badge-pill {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .badge-purple { background: #f3e8ff; color: #7c3aed; }
+  .badge-blue { background: #dbeafe; color: #2563eb; }
+  .profile-info .welcome-text { color: #64748b; font-size: 14px; margin-top: 8px; }
+
+  .earnings-section {
+    max-width: 440px;
+    margin: 24px auto 40px;
+    padding: 0 4%;
+  }
+  .earnings-section h3 { color: #fff; font-size: 20px; margin-bottom: 16px; }
+
+  .earn-box {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 18px;
+    padding: 26px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .earn-box.highlight { border-top: 4px solid #f59e0b; }
+  .earn-box .amount { color: #fff; font-size: 34px; font-weight: 800; }
+  .earn-box .label { color: #ede9fe; font-size: 14px; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="back-btn">←</a>
+    <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
+    <span class="brand-name">Vishal Consulting</span>
+  </header>
+
+  <div class="profile-card">
+    <div class="profile-avatar" id="userAvatar">V</div>
+    <div class="profile-info">
+      <h2 id="userName">User</h2>
+      <span class="badge-pill badge-purple">100% Zero Investment</span>
+      <span class="badge-pill badge-blue">Online Platform</span>
+      <p class="welcome-text">Welcome to your dashboard</p>
+    </div>
+  </div>
+
+  <div class="earnings-section">
+    <h3>Your Earnings</h3>
+    <div class="earn-box">
+      <div class="amount">₹0</div>
+      <div class="label">Today's Earnings</div>
+    </div>
+    <div class="earn-box">
+      <div class="amount">₹0</div>
+      <div class="label">This Week</div>
+    </div>
+    <div class="earn-box">
+      <div class="amount">₹0</div>
+      <div class="label">This Month</div>
+    </div>
+    <div class="earn-box highlight">
+      <div class="amount">₹0</div>
+      <div class="label">All Time Earnings</div>
+    </div>
+  </div>
+
+</body>
+</html>
