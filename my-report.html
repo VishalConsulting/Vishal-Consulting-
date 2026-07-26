@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Report - Vishal Consulting</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #0b1120; color: #fff; }
+  header { display: flex; align-items: center; gap: 10px; padding: 14px 5%; background: #fff; border-bottom: 1px solid #e2e8f0; }
+  header .back-btn { color: #22c55e; text-decoration: none; font-size: 20px; font-weight: 700; }
+  header img.brand-logo { height: 30px; }
+  header .brand-name { font-weight: 800; color: #0f172a; font-size: 17px; }
+
+  .page-wrap { max-width: 480px; margin: 0 auto; padding: 20px 5% 40px; }
+  h1 { color: #22c55e; font-size: 26px; margin-bottom: 4px; }
+  .sub { color: #94a3b8; font-size: 13.5px; margin-bottom: 20px; }
+
+  .tabs-row { display: flex; background: #111827; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+  .tab-btn { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-size: 13.5px; font-weight: 700; color: #94a3b8; cursor: pointer; }
+  .tab-btn.active { background: #22c55e; color: #000; }
+
+  .report-item {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .report-item .row { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px; }
+  .report-item .row span:first-child { color: #94a3b8; }
+  .report-item .row span:last-child { font-weight: 600; text-align: right; }
+  .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .status-Pending { background: #fef3c7; color: #92400e; }
+  .status-Approved { background: #dcfce7; color: #16a34a; }
+  .status-Rejected { background: #fee2e2; color: #dc2626; }
+  .time { color: #64748b; font-size: 11.5px; margin-top: 8px; text-align: right; }
+
+  .empty-state { text-align: center; color: #64748b; padding: 60px 20px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="back-btn">←</a>
+    <img src="logo.png" alt="Vishal Consulting Logo" class="brand-logo">
+    <span class="brand-name">Vishal Consulting</span>
+  </header>
+
+  <div class="page-wrap">
+    <h1>📋 My Report</h1>
+    <p class="sub">View all your submitted reports and their status</p>
+
+    <div class="tabs-row">
+      <div class="tab-btn active" id="tabAccount">Account Open (0)</div>
+      <div class="tab-btn" id="tabTrade">Trade Reports (0)</div>
+    </div>
+
+    <div id="listArea"><div class="empty-state">Loading...</div></div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
+    authDomain: "vishal-consulting-22aab.firebaseapp.com",
+    projectId: "vishal-consulting-22aab",
+    storageBucket: "vishal-consulting-22aab.firebasestorage.app",
+    messagingSenderId: "347692393673",
+    appId: "1:347692393673:web:2160e81d38c9b0df529918"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  setPersistence(auth, browserSessionPersistence);
+
+  document.documentElement.style.visibility = "hidden";
+
+  let accountReports = [];
+  let tradeReports = [];
+  let activeTab = 'account';
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+    document.documentElement.style.visibility = "visible";
+    loadData(user.uid);
+  });
+
+  function renderList() {
+    const listArea = document.getElementById('listArea');
+    const data = activeTab === 'account' ? accountReports : tradeReports;
+    if (data.length === 0) {
+      listArea.innerHTML = '<div class="empty-state">Abhi tak koi report submit nahi kiya.</div>';
+      return;
+    }
+    listArea.innerHTML = data.map(r => `
+      <div class="report-item">
+        <div class="row"><span>Campaign:</span><span>${r.campaign || '-'}</span></div>
+        <div class="row"><span>Customer:</span><span>${r.custName || '-'}</span></div>
+        <div class="row"><span>Mobile:</span><span>${r.custMobile || '-'}</span></div>
+        <div class="row"><span>Status:</span><span class="status-badge status-${r.status || 'Pending'}">${r.status || 'Pending'}</span></div>
+        <div class="time">${r.createdAt && r.createdAt.toDate ? r.createdAt.toDate().toLocaleString('en-IN') : ''}</div>
+      </div>
+    `).join('');
+  }
+
+  async function loadData(uid) {
+    const accSnap = await getDocs(query(collection(db, 'account_open_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
+    accountReports = accSnap.docs.map(d => d.data());
+    const tradeSnap = await getDocs(query(collection(db, 'trade_reports'), where('uid', '==', uid), orderBy('createdAt', 'desc')));
+    tradeReports = tradeSnap.docs.map(d => d.data());
+
+    document.getElementById('tabAccount').textContent = `Account Open (${accountReports.length})`;
+    document.getElementById('tabTrade').textContent = `Trade Reports (${tradeReports.length})`;
+    renderList();
+  }
+
+  document.getElementById('tabAccount').addEventListener('click', () => {
+    activeTab = 'account';
+    document.getElementById('tabAccount').classList.add('active');
+    document.getElementById('tabTrade').classList.remove('active');
+    renderList();
+  });
+  document.getElementById('tabTrade').addEventListener('click', () => {
+    activeTab = 'trade';
+    document.getElementById('tabTrade').classList.add('active');
+    document.getElementById('tabAccount').classList.remove('active');
+    renderList();
+  });
+</script>
+
+</body>
+</html>
