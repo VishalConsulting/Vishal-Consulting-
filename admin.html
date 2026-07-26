@@ -50,7 +50,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-  import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+  import { getFirestore, collection, query, orderBy, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
   const ADMIN_EMAIL = "vishalconsulting8777@gmail.com";
 
@@ -99,6 +99,7 @@
     function renderList() {
       const listArea = document.getElementById('listArea');
       const data = activeTab === 'account' ? accountReports : tradeReports;
+      const collName = activeTab === 'account' ? 'account_open_reports' : 'trade_reports';
       if (data.length === 0) {
         listArea.innerHTML = '<div class="empty-state">Abhi koi report submit nahi hua.</div>';
         return;
@@ -110,16 +111,35 @@
           <div class="row"><span>Mobile:</span><span>${r.custMobile || '-'}</span></div>
           <div class="row"><span>Notes:</span><span>${r.notes || 'N/A'}</span></div>
           <div class="row"><span>Submitted By:</span><span>${r.submittedBy || '-'}</span></div>
+          <label style="display:block; font-size:12px; color:#94a3b8; margin-top:10px; margin-bottom:4px;">Status:</label>
+          <select class="status-select" data-id="${r.id}" data-coll="${collName}" style="width:100%; padding:8px; border-radius:8px; border:1px solid #334155; background:#1f2937; color:#fff; font-size:13px;">
+            <option value="Pending" ${r.status === 'Pending' || !r.status ? 'selected' : ''}>⏳ Pending</option>
+            <option value="Approved" ${r.status === 'Approved' ? 'selected' : ''}>✅ Account Opened</option>
+            <option value="Rejected" ${r.status === 'Rejected' ? 'selected' : ''}>❌ Rejected</option>
+          </select>
           <div class="time">${r.createdAt && r.createdAt.toDate ? r.createdAt.toDate().toLocaleString('en-IN') : ''}</div>
         </div>
       `).join('');
+
+      document.querySelectorAll('.status-select').forEach(sel => {
+        sel.addEventListener('change', async (e) => {
+          const id = e.target.getAttribute('data-id');
+          const coll = e.target.getAttribute('data-coll');
+          try {
+            await updateDoc(doc(db, coll, id), { status: e.target.value });
+            e.target.style.borderColor = '#22c55e';
+          } catch (err) {
+            alert('Error updating status: ' + err.message);
+          }
+        });
+      });
     }
 
     async function loadData() {
       const accSnap = await getDocs(query(collection(db, 'account_open_reports'), orderBy('createdAt', 'desc')));
-      accountReports = accSnap.docs.map(d => d.data());
+      accountReports = accSnap.docs.map(d => ({ id: d.id, ...d.data() }));
       const tradeSnap = await getDocs(query(collection(db, 'trade_reports'), orderBy('createdAt', 'desc')));
-      tradeReports = tradeSnap.docs.map(d => d.data());
+      tradeReports = tradeSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
       document.getElementById('tabAccount').textContent = `Account Open (${accountReports.length})`;
       document.getElementById('tabTrade').textContent = `Trade Reports (${tradeReports.length})`;
