@@ -10,6 +10,7 @@
   body {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #0b1120, #111827);
@@ -120,11 +121,51 @@
 
   .form-section { display: none; }
   .form-section.active { display: block; }
+  .brand-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .brand-header .logo-box {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .brand-header .logo-box img {
+    height: 56px;
+    width: auto;
+  }
+  .brand-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .3px;
+    margin-bottom: 8px;
+  }
+  .brand-header .tagline {
+    color: #94a3b8;
+    font-size: 14px;
+  }
 </style>
 </head>
 <body>
 
   <div class="card">
+    <div class="brand-header">
+      <div class="logo-box">
+        <img src="logo.png" alt="Vishal Consulting Logo">
+      </div>
+      <h1>Vishal Consulting</h1>
+      <p class="tagline">Join our team and start your financial journey</p>
+    </div>
     <h2>Welcome</h2>
     <p class="sub">Login or create your Vishal Consulting account</p>
 
