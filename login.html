@@ -249,9 +249,11 @@
   // Session-only login: user must log in again every time they open the site fresh
   setPersistence(auth, browserSessionPersistence);
 
+  let allowAutoRedirect = true;
+
   // If already logged in (within this session), skip straight to home page
   onAuthStateChanged(auth, (user) => {
-    if (user) {
+    if (user && allowAutoRedirect) {
       window.location.href = "home.html";
     }
   });
@@ -300,6 +302,7 @@
 
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    allowAutoRedirect = false;
     loginError.textContent = '';
     loginBtn.disabled = true;
     loginBtn.textContent = 'Logging in...';
@@ -313,6 +316,7 @@
         setTimeout(() => window.location.href = 'home.html', 1000);
       })
       .catch((err) => {
+        allowAutoRedirect = true;
         loginError.textContent = friendlyError(err.code);
         loginBtn.disabled = false;
         loginBtn.textContent = 'Login';
@@ -333,6 +337,7 @@
 
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    allowAutoRedirect = false;
     signupError.textContent = '';
     signupBtn.disabled = true;
     signupBtn.textContent = 'Creating account...';
@@ -378,6 +383,7 @@
         setTimeout(() => window.location.href = 'home.html', 1000);
       })
       .catch((err) => {
+        allowAutoRedirect = true;
         signupError.textContent = friendlyError(err.code);
         signupBtn.disabled = false;
         signupBtn.textContent = 'Create Account';
