@@ -45,7 +45,10 @@
   async function loadTlAndLeader(uid) {
     try {
       const snap = await getDoc(doc(db, 'users', uid));
-      if (!snap.exists()) return;
+      if (!snap.exists()) {
+        document.getElementById('leaderArea').innerHTML = '<div class="no-leader-box" style="color:#f87171;">⚠️ User document not found in Firestore.</div>';
+        return;
+      }
       const data = snap.data();
       myTlCode = data.tlCode || '--------';
 
@@ -67,7 +70,7 @@
         leaderArea.innerHTML = '<div class="no-leader-box">Aapko kisi ne refer nahi kiya hai.</div>';
       }
     } catch (err) {
-      console.error(err);
+      document.getElementById('leaderArea').innerHTML = '<div class="no-leader-box" style="color:#f87171;">⚠️ Error: ' + err.message + '</div>';
     }
   }
 
