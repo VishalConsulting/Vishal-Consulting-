@@ -4,6 +4,7 @@
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBG3XWczK9NHIAvz4xA9lc22qRV3iYoVd8",
@@ -16,10 +17,13 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   setPersistence(auth, browserSessionPersistence);
 
   document.documentElement.style.visibility = "hidden";
+  let myTlCode = '';
+  let tlVisible = false;
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -34,7 +38,72 @@
         nameEl.textContent = displayName;
         if (avatarEl) avatarEl.textContent = displayName.charAt(0).toUpperCase();
       }
+      loadTlAndLeader(user.uid);
     }
+  });
+
+  async function loadTlAndLeader(uid) {
+    try {
+      const snap = await getDoc(doc(db, 'users', uid));
+      if (!snap.exists()) return;
+      const data = snap.data();
+      myTlCode = data.tlCode || '--------';
+
+      const leaderArea = document.getElementById('leaderArea');
+      if (data.referredBy && data.referredBy.name) {
+        const l = data.referredBy;
+        leaderArea.innerHTML = `
+          <div class="leader-card">
+            <div class="leader-top">
+              <div class="leader-avatar">${l.name.charAt(0).toUpperCase()}</div>
+              <h4>${l.name}</h4>
+            </div>
+            <div class="leader-row">📱 ${l.phone || 'N/A'}</div>
+            <div class="leader-row">✉️ ${l.email || 'N/A'}</div>
+            <div class="leader-row tlcode-row">🎯 TL Code: ${l.tlCode || 'N/A'}</div>
+          </div>
+        `;
+      } else {
+        leaderArea.innerHTML = '<div class="no-leader-box">Aapko kisi ne refer nahi kiya hai.</div>';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  window.toggleTlVisibility = function () {
+    tlVisible = !tlVisible;
+    document.getElementById('tlCodeDisplay').textContent = tlVisible ? myTlCode : '••••••••';
+    document.getElementById('tlToggleBtn').innerHTML = tlVisible ? '🙉 Hide' : '🙈 Show';
+    document.getElementById('tlEyeBtn').textContent = tlVisible ? '🙈' : '👁️';
+  };
+
+  window.copyTlCode = function () {
+    navigator.clipboard.writeText(myTlCode).then(() => {
+      alert('✅ TL Code Copied: ' + myTlCode);
+    });
+  };
+
+  window.shareTlLink = function () {
+    const link = 'https://vishal-consulting.vercel.app/login.html?ref=' + myTlCode;
+    if (navigator.share) {
+      navigator.share({ title: 'Vishal Consulting', text: 'Join Vishal Consulting using my referral code!', url: link });
+    } else {
+      navigator.clipboard.writeText(link).then(() => {
+        alert('🔗 Referral link copied: ' + link);
+      });
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('tlToggleBtn');
+    const eyeBtn = document.getElementById('tlEyeBtn');
+    const copyBtn = document.getElementById('tlCopyBtn');
+    const shareBtn = document.getElementById('tlShareBtn');
+    if (toggleBtn) toggleBtn.addEventListener('click', window.toggleTlVisibility);
+    if (eyeBtn) eyeBtn.addEventListener('click', window.toggleTlVisibility);
+    if (copyBtn) copyBtn.addEventListener('click', window.copyTlCode);
+    if (shareBtn) shareBtn.addEventListener('click', window.shareTlLink);
   });
 
   window.logoutUser = function () {
@@ -193,7 +262,197 @@
   .dash-stat-box .stat-label { font-size: 12.5px; color: #78350f; font-weight: 600; }
   .dash-stat-box .stat-amount { font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 2px; }
 
+  .tl-section {
+    max-width: 440px;
+    margin: 16px auto;
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .tl-section .tl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .tl-section .tl-header h3 { font-size: 19px; display: flex; align-items: center; gap: 8px; }
+  .tl-hide-btn { display: flex; align-items: center; gap: 4px; color: #64748b; font-size: 13px; cursor: pointer; background: none; border: none; }
+  .tl-label { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+  .tl-code-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .tl-code-box {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #2563eb;
+    font-family: monospace;
+  }
+  .tl-icon-btn {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #0f172a;
+  }
+  .tl-share-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  .tl-divider { border-top: 1px solid #e2e8f0; margin-bottom: 16px; }
+  .tl-leader-label { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-weight: 700; font-size: 16px; }
+  .tl-leader-label .icon-sq {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .leader-card {
+    background: linear-gradient(135deg, #9333ea, #4f46e5);
+    border-radius: 18px;
+    padding: 22px;
+    color: #fff;
+  }
+  .leader-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .leader-avatar {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 22px;
+    flex-shrink: 0;
+  }
+  .leader-top h4 { font-size: 19px; }
+  .leader-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 11px 14px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .leader-row.tlcode-row { background: rgba(245,158,11,.85); color: #78350f; }
+  .no-leader-box { text-align: center; color: #94a3b8; font-size: 13.5px; padding: 20px; }
+
+  .tl-section {
+    max-width: 440px;
+    margin: 16px auto;
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 20px;
+    padding: 22px;
+  }
+  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .tl-header h3 { font-size: 19px; }
+  .tl-hide-btn { display: flex; align-items: center; gap: 5px; color: #64748b; font-size: 13px; cursor: pointer; background:none; border:none; }
+  .tl-label { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+  .tl-code-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tl-code-box {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-family: monospace;
+    font-size: 15px;
+  }
+  .tl-icon-btn {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #0f172a;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tl-share-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 18px;
+  }
+  .tl-divider { border-top: 1px solid #cbd5e1; margin-bottom: 18px; }
+  .tl-leader-label { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-weight: 700; font-size: 15px; }
+  .icon-sq {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff;
+  }
+  .leader-card {
+    background: linear-gradient(135deg, #9333ea, #6366f1);
+    border-radius: 20px;
+    padding: 22px;
+    color: #fff;
+  }
+  .leader-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .leader-avatar {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    border: 3px solid rgba(255,255,255,.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .leader-name { font-size: 20px; font-weight: 800; }
+  .leader-detail-box {
+    background: rgba(255,255,255,.15);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .leader-detail-box.gold { background: rgba(245,158,11,.35); }
+  .leader-row {
+    background: rgba(255,255,255,.15);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .leader-row.tlcode-row { background: rgba(245,158,11,.35); }
+  .no-leader-box { text-align: center; color: #64748b; font-size: 13.5px; padding: 20px; }
+
   .menu-list {
+
     max-width: 420px;
     margin: 24px auto;
     display: flex;
@@ -280,6 +539,25 @@
         <div class="stat-amount">₹0</div>
       </div>
     </div>
+  </div>
+
+  <div class="tl-section">
+    <div class="tl-header">
+      <h3>🔗 Your TL Code &amp; Team Leader</h3>
+      <button class="tl-hide-btn" id="tlToggleBtn">🙈 Hide</button>
+    </div>
+    <div class="tl-label">Your TL Code:</div>
+    <div class="tl-code-row">
+      <div class="tl-code-box" id="tlCodeDisplay">••••••••</div>
+      <button class="tl-icon-btn" id="tlEyeBtn">👁️</button>
+      <button class="tl-icon-btn" id="tlCopyBtn">📋 Copy</button>
+    </div>
+    <button class="tl-share-btn" id="tlShareBtn">🔗 Share Now</button>
+
+    <div class="tl-divider"></div>
+
+    <div class="tl-leader-label"><span class="icon-sq">👥</span> Your Team Leader</div>
+    <div id="leaderArea"><div class="no-leader-box">Loading...</div></div>
   </div>
 
   <div class="menu-list">
