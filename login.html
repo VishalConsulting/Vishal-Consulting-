@@ -226,6 +226,10 @@
     getFirestore,
     doc,
     setDoc,
+    getDocs,
+    collection,
+    query,
+    where,
     serverTimestamp
   } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
@@ -320,6 +324,13 @@
   const signupBtn = document.getElementById('signupBtn');
   const signupError = document.getElementById('signupError');
 
+  function generateTLCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+    return code;
+  }
+
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
     signupError.textContent = '';
@@ -330,17 +341,37 @@
     const phone = document.getElementById('signupPhone').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value.trim();
+    const refCode = new URLSearchParams(window.location.search).get('ref');
+    const myTlCode = generateTLCode();
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
-        return updateProfile(user, { displayName: name })
-          .then(() => setDoc(doc(db, 'users', user.uid), {
-            name: name,
-            phone: phone,
-            email: email,
-            createdAt: serverTimestamp()
-          }));
+        await updateProfile(user, { displayName: name });
+
+        let referredBy = null;
+        if (refCode) {
+          const refSnap = await getDocs(query(collection(db, 'users'), where('tlCode', '==', refCode)));
+          if (!refSnap.empty) {
+            const refData = refSnap.docs[0].data();
+            referredBy = {
+              uid: refSnap.docs[0].id,
+              name: refData.name || '',
+              phone: refData.phone || '',
+              email: refData.email || '',
+              tlCode: refData.tlCode || ''
+            };
+          }
+        }
+
+        return setDoc(doc(db, 'users', user.uid), {
+          name: name,
+          phone: phone,
+          email: email,
+          tlCode: myTlCode,
+          referredBy: referredBy,
+          createdAt: serverTimestamp()
+        });
       })
       .then(() => {
         successMsg.textContent = '✅ Account created! Redirecting...';
