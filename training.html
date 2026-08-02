@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training Center - Vishal Consulting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.png">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background:#f1f5f9; color:#0f172a; padding-bottom:40px; }
+
+    .whatsapp {
+      position: fixed; bottom: 20px; right: 20px;
+      background:#25D366; color:#fff; width:52px; height:52px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:24px; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,.25); z-index:999;
+    }
+
+    .logo {
+      display:flex; align-items:center; gap:10px;
+      padding:14px 18px; background:#fff; border-bottom:1px solid #e2e8f0;
+    }
+    .logo img { width:38px; height:38px; border-radius:8px; object-fit:contain; }
+    .logo span { font-weight:800; font-size:17px; color:#0f172a; }
+
+    header.top-header {
+      background:#fff; padding:0 0 10px; border-bottom:1px solid #e2e8f0;
+      display:flex; flex-direction:column; position:sticky; top:0; z-index:100;
+    }
+    nav { display:flex; align-items:center; gap:16px; padding:8px 18px; overflow-x:auto; }
+    nav a { text-decoration:none; color:#334155; font-size:13.5px; font-weight:600; white-space:nowrap; }
+    nav a:hover { color:#2563eb; }
+    #themeToggle {
+      margin-left:auto; border:none; background:#f1f5f9; border-radius:8px;
+      width:34px; height:34px; cursor:pointer; font-size:15px; flex-shrink:0;
+    }
+
+    .container { max-width:520px; margin:0 auto; padding:18px 16px; }
+
+    .tc-hero {
+      background:#fff; border-radius:16px; padding:18px;
+      display:flex; align-items:center; gap:14px; margin-bottom:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    }
+    .tc-hero .icon-box {
+      width:52px; height:52px; border-radius:14px; background:#f1f5f9;
+      display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0;
+    }
+    .tc-hero h2 { font-size:20px; font-weight:800; margin-bottom:2px; }
+    .tc-hero p { font-size:13px; color:#64748b; }
+
+    .community-card {
+      border-radius:16px; overflow:hidden; margin-bottom:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,.06); background:#fff;
+    }
+    .community-banner {
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#fff; padding:22px 18px; position:relative;
+    }
+    .community-banner .cb-title { font-size:17px; font-weight:800; line-height:1.3; }
+    .community-banner .cb-icon { font-size:26px; margin-bottom:8px; }
+    .community-body { padding:16px 18px; }
+    .community-body h4 { font-size:15px; font-weight:700; margin-bottom:4px; }
+    .community-body p { font-size:12.5px; color:#64748b; margin-bottom:12px; }
+    .join-btn {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      width:100%; padding:13px; border:none; border-radius:10px;
+      font-size:14px; font-weight:700; color:#fff; cursor:pointer; text-decoration:none;
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+    }
+    .community-banner.qa { background:linear-gradient(135deg,#25D366,#128C4A); }
+
+    .training-card {
+      background:#fff; border-radius:16px; overflow:hidden; margin-bottom:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,.06);
+    }
+    .training-banner {
+      position:relative; padding:24px 18px; color:#fff; min-height:130px;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      background:linear-gradient(135deg,#1e3a8a,#1e293b);
+    }
+    .training-tag {
+      position:absolute; top:14px; left:14px;
+      background:linear-gradient(135deg,#f97316,#ea580c);
+      font-size:11px; font-weight:800; padding:5px 12px; border-radius:20px;
+    }
+    .training-num {
+      position:absolute; top:10px; right:16px;
+      width:44px; height:50px; background:#facc15; color:#1e293b;
+      clip-path: polygon(0 0,100% 0,100% 75%,50% 100%,0 75%);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:18px;
+    }
+    .training-banner h3 { font-size:19px; font-weight:800; line-height:1.25; max-width:75%; }
+    .play-btn {
+      position:absolute; bottom:14px; left:14px;
+      width:42px; height:42px; border-radius:50%;
+      background:#ef4444; display:flex; align-items:center; justify-content:center;
+      font-size:16px; color:#fff;
+    }
+    .views-pill {
+      position:absolute; bottom:14px; right:14px;
+      background:rgba(0,0,0,.55); color:#fff; font-size:11px; font-weight:700;
+      padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:4px;
+    }
+    .training-body { padding:16px 18px; }
+    .training-body h4 { font-size:16.5px; font-weight:800; margin-bottom:12px; }
+    .watch-btn {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      width:100%; padding:13px; border:none; border-radius:10px;
+      font-size:14px; font-weight:700; color:#fff; cursor:pointer; text-decoration:none;
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+    }
+
+    .tips-card {
+      background:#fff; border-radius:16px; padding:20px 18px;
+      display:flex; gap:14px; box-shadow:0 4px 14px rgba(0,0,0,.06);
+    }
+    .tips-icon {
+      width:48px; height:48px; border-radius:12px; background:#f1f5f9;
+      display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+    }
+    .tips-card h4 { font-size:15.5px; font-weight:800; margin-bottom:10px; }
+    .tips-card li { list-style:none; font-size:13.5px; color:#475569; margin-bottom:8px; padding-left:14px; position:relative; }
+    .tips-card li::before { content:"•"; position:absolute; left:0; color:#94a3b8; }
+
+    .bottom-nav {
+      position:fixed; bottom:0; left:0; right:0; background:#fff;
+      border-top:1px solid #e2e8f0; display:flex; justify-content:space-around;
+      padding:8px 0; font-size:11px; font-weight:600; color:#475569;
+    }
+    .bottom-nav a { text-decoration:none; color:inherit; text-align:center; }
+  </style>
+</head>
+<body>
+
+<a href="https://wa.me/918777240537" class="whatsapp">💬</a>
+
+<div class="logo">
+  <img src="logo.png" alt="Vishal Consulting Logo">
+  <span>Vishal Consulting</span>
+</div>
+
+<header class="top-header">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="home.html">Dashboard</a>
+    <a href="#apps">Apps</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <button id="themeToggle">🌙</button>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="tc-hero">
+    <div class="icon-box">🎥</div>
+    <div>
+      <h2>Training Center</h2>
+      <p>Learn, grow, and earn with our resources</p>
+    </div>
+  </div>
+
+  <!-- WhatsApp Announcement Community -->
+  <div class="community-card">
+    <div class="community-banner">
+      <div class="cb-icon">📢</div>
+      <div class="cb-title">Vishal Consulting<br>Official Announcement Community</div>
+    </div>
+    <div class="community-body">
+      <h4>WhatsApp Community Link</h4>
+      <p>Join this community for updates.</p>
+      <a class="join-btn" href="https://wa.me/918777240537" target="_blank">💬 Join Group</a>
+    </div>
+  </div>
+
+  <!-- WhatsApp Q&A Group -->
+  <div class="community-card">
+    <div class="community-banner qa">
+      <div class="cb-icon">📱</div>
+      <div class="cb-title">WhatsApp<br>Q&amp;A Group</div>
+    </div>
+    <div class="community-body">
+      <h4>WhatsApp Q&amp;A Group</h4>
+      <p>Ask your questions and get instant support.</p>
+      <a class="join-btn" href="https://wa.me/918777240537" target="_blank">💬 Join Group</a>
+    </div>
+  </div>
+
+  <!-- Training 1 -->
+  <div class="training-card">
+    <div class="training-banner">
+      <div class="training-tag">Training No.1</div>
+      <div class="training-num">1</div>
+      <div class="play-btn">▶️</div>
+      <div class="views-pill">👁️ 1205</div>
+      <h3>How to Start Work After Opening Demat Account</h3>
+    </div>
+    <div class="training-body">
+      <h4>How to Start Work After Opening Demat Account</h4>
+      <a class="watch-btn" href="#" target="_blank">▶️ Watch Now</a>
+    </div>
+  </div>
+
+  <!-- Training 2 -->
+  <div class="training-card">
+    <div class="training-banner">
+      <div class="training-tag">Training No.2</div>
+      <div class="training-num">2</div>
+      <div class="play-btn">▶️</div>
+      <div class="views-pill">👁️ 818</div>
+      <h3>How to Use Vishal Consulting Website</h3>
+    </div>
+    <div class="training-body">
+      <h4>How to Use Vishal Consulting Website</h4>
+      <a class="watch-btn" href="#" target="_blank">▶️ Watch Now</a>
+    </div>
+  </div>
+
+  <!-- Training 3 -->
+  <div class="training-card">
+    <div class="training-banner">
+      <div class="training-tag">Training No.3</div>
+      <div class="training-num">3</div>
+      <div class="play-btn">▶️</div>
+      <div class="views-pill">👁️ 647</div>
+      <h3>How To Get Customers For Work</h3>
+    </div>
+    <div class="training-body">
+      <h4>How To Get Customers For Work</h4>
+      <a class="watch-btn" href="#" target="_blank">▶️ Watch Now</a>
+    </div>
+  </div>
+
+  <!-- Training 4 -->
+  <div class="training-card">
+    <div class="training-banner">
+      <div class="training-tag">Training No.4</div>
+      <div class="training-num">4</div>
+      <div class="play-btn">▶️</div>
+      <div class="views-pill">👁️ 414</div>
+      <h3>How to Close Leads on Chat</h3>
+    </div>
+    <div class="training-body">
+      <h4>How To Close Leads On Chat</h4>
+      <a class="watch-btn" href="#" target="_blank">▶️ Watch Now</a>
+    </div>
+  </div>
+
+  <!-- Training Tips -->
+  <div class="tips-card">
+    <div class="tips-icon">🎥</div>
+    <div>
+      <h4>💡 Training Tips</h4>
+      <ul>
+        <li>Watch all tutorial videos to understand the platform</li>
+        <li>Join WhatsApp/Telegram groups for instant support</li>
+        <li>Bookmark important resources for quick access</li>
+        <li>Apply what you learn to start earning faster</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+  <a href="#apps">📱<br>Apps</a>
+  <a href="index.html">🏠<br>Landing</a>
+  <a href="home.html">🏢<br>Dashboard</a>
+</nav>
+
+</body>
+      </html>
